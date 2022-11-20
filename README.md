@@ -1,34 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+API Routes
 
-## Getting Started
+# Search ✅
+ => https://api.themoviedb.org/3/search/multi?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&query=the%20boys%202&page=1&include_adult=true
 
-First, run the development server:
+# Movies Listing  
+### Trending 
+ => https://api.themoviedb.org/3/trending/(all | movie | tv)/(day | week)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Get the most newly created movie. This is a live response and will continuously change.
+ => https://api.themoviedb.org/3/discover/movie?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&sort_by=primary_release_date.desc&include_adult=false&include_video=false&page=1&primary_release_year=2022&with_original_language=en&with_watch_monetization_types=flatrate
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Get the top rated movies on TMDB.
+ => https://api.themoviedb.org/3/movie/top_rated?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&page=1
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Movie Page
+### Get movie details
+ => https://api.themoviedb.org/3/movie/{movie_id}?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Get Recommended movies 
+ => https://api.themoviedb.org/3/movie/{movie_id}/recommendations?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&page=1
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Get similar movies
+ => https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key=<<api_key>>&language=en-US&page=1
 
-## Learn More
+### Get Movie trailer 
+ => https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# TV 
+## Listing
+### top_rated
+=>  https://api.themoviedb.org/3/tv/top_rated?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&page=1
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### popular
+=> https://api.themoviedb.org/3/tv/popular?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&page=1
 
-## Deploy on Vercel
+### latest
+=>  https://api.themoviedb.org/3/tv/latest?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## series details
+
+### Tv Detailes
+    => https://api.themoviedb.org/3/tv/{tv_id}?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US  
+### trailer
+    => https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US
+
+### recommendations
+    =>  https://api.themoviedb.org/3/tv/{tv_id}/recommendations?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&page=1
+
+#### TV Seasons
+    => https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US
+
+#### season trailer
+    =>  https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}/videos?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US
+
+#### episode Detailes
+    => https://api.themoviedb.org/3/tv/1402/season/1/episode/1?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US
+
+#### episode trailer
+ =>  https://api.themoviedb.org/3/tv/1402/season/1/episode/1/videos?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US
+
+
+
+
+ ###### Discover By Network
+
+ ## Netflix
+ https://api.themoviedb.org/3/discover/tv?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&with_networks=213&include_null_first_air_dates=false&with_watch_monetization_types=flatrate&with_status=0&with_type=4
+
+## HBO
+
+    https://api.themoviedb.org/3/discover/tv?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&with_networks=49&include_null_first_air_dates=false&with_watch_monetization_types=flatrate&with_status=0&with_type=4
+
+
+## Disney+
+ https://api.themoviedb.org/3/discover/tv?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&with_networks=2739&include_null_first_air_dates=false&with_watch_monetization_types=flatrate&with_status=0&with_type=4
+
+## Amazon Prime
+=> https://api.themoviedb.org/3/discover/tv?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&with_networks=1024&include_null_first_air_dates=false&with_watch_monetization_types=flatrate&with_status=0&with_type=4
+
+

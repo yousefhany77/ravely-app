@@ -1,57 +1,33 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Card from "../components/card/Card";
+import Carousel from "../components/layout/carousel";
+import { ListItem } from "../util/getDataListing";
+export const revalidate = 86400;
+export default async function Home() {
+  // fetch recommended list of movies and series passed on the user's preferences and history of watched content
 
-export default function Home() {
+  // fetch trending list of movies and series
+  const trendingResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/getDataListing`,
+    {
+      next: { revalidate: 86400 },
+    }
+  );
+  const { results: trending }: { results: ListItem[] } =
+    await trendingResponse.json();
+
+  // fetch top rated list of movies and series
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js 13!</a>
-        </h1>
+    <main className="text-white w-full flex flex-col">
+      <Carousel title="Continue watching" />
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://beta.nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js 13</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Explore the Next.js 13 playground.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates/next.js/app-directory?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>Deploy your Next.js site to a public URL with Vercel.</p>
-          </a>
+      <section className="h-full  text-white px-10 w-full  ">
+        <h2 className="font-bold text-3xl my-6 ">Trending</h2>
+        <div className="grid  md:grid-cols-3 lg:grid-cols-4  3xl:grid-cols-5 gap-4 ">
+          {trending.map((item: any) => (
+            <Card data={item} key={item.id} />
+          ))}
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
-  )
+      </section>
+    </main>
+  );
 }

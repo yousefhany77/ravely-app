@@ -1,18 +1,28 @@
-import './globals.css'
-
+"use client";
+import "./globals.css";
+import Header from "../components/layout/Header";
+import { Nunito } from "@next/font/google";
+import Sidebar from "../components/layout/Sidebar";
+const nunito = Nunito({ subsets: ["latin-ext"] });
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
+    <html lang="en" className={`${nunito.className} bg-zinc-900 h-full `}>
       <head />
-      <body>{children}</body>
+
+      <body className="flex   w-full">
+        {/* sidebar */}
+        <Sidebar />
+        {/* main */}
+
+        <main className="relative w-full h-full flex-1 ">
+          <Header />
+          {children}
+        </main>
+      </body>
     </html>
-  )
+  );
 }

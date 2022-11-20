@@ -1,26 +1,100 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+.circle-progess {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+.circle-progess::before {
+  content: "";
+  display: block;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  position: absolute;
+}
+
+.active {
+  color: rgb(193, 27, 64);
+  font-weight: 600;
+  border-color: rgb(193, 27, 64);
+  transition: all 230ms ease-in-out;
+  animation: active 0.3s linear;
+}
+
+.active span {
+  color: white;
+}
+
+.cardAspect {
+  aspect-ratio: 0.66/1;
+}
+
+.bannerAspect {
+  aspect-ratio: 16/9;
+}
+
+.btn-primary {
+  background-color: rgb(193, 27, 64);
+  color: white;
+}
+
+.btn-primary:hover {
+  color: rgb(193, 27, 64);
+  background-color: white;
+  font-weight: 600;
+  border-color: rgb(193, 27, 64);
+  transition: all 230ms ease-in-out;
+  animation: active 0.3s linear;
+}
+.btn-secondary {
+  border: 1px solid #68697d7c;
+  color: white;
+  transition: all 230ms ease-out;
+}
+
+.btn-secondary:hover {
+  background-color: white;
+  color: rgb(193, 27, 64);
+  transition: all 230ms ease-in-out;
+  animation: active 0.2s linear;
+}
+
+@keyframes active {
+  0% {
+    transform: scale(0.95);
+    opacity: 100;
+    border-color: #68697d;
   }
-  body {
-    color: white;
-    background: black;
+  50% {
+    transform: scale(1.03);
+    opacity: 50;
+  }
+  100% {
+    /* border-color: rgb(193, 27, 64); */
+    transform: scale(1);
   }
 }
+
