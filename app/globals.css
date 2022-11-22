@@ -98,3 +98,8 @@ h6 {
   }
 }
 
+
+.slideActive{
+  transform: scale(1.03);
+  border: 2px solid salmon;
+}

@@ -58,4 +58,5 @@ export type ListItem = {
   video: boolean;
   vote_average: number;
   name: string;
+  media_type: "tv" | "movie";
 };

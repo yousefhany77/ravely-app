@@ -17,7 +17,7 @@ export default async function Home() {
 
   // fetch top rated list of movies and series
   return (
-    <main className="text-white w-full flex flex-col">
+    <main className="text-white w-full flex flex-col my-16">
       <Carousel title="Continue watching" />
 
       <section className="h-full  text-white px-10 w-full  ">

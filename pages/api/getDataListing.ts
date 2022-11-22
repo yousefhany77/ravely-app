@@ -16,7 +16,6 @@ export default async function handler(
   res: NextApiResponse<ListResponse>
 ) {
   const { mediaType, listType, page, limit }: Partial<query> = req.query;
-console.log("req 🌏");
   if (mediaType && listType) {
     const list = await getDataListing(mediaType, listType, page);
     if (limit) {

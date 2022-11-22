@@ -14,11 +14,13 @@ export const useFilters = () => {
     if (!isDefined) {
       //  if the filter is not defined, add it
       currentFilters.push(`${key}=${value}`);
+      
       return router.push(`${pathname}?${currentFilters.join("&")}`);
     } else {
       // if same filter is defined, remove it
       if (searchParams.get(key) === value) {
         remove(key);
+        
         return;
       }
       // if different filter is defined, replace it
@@ -26,6 +28,7 @@ export const useFilters = () => {
       currentFilters = currentFilters.filter((filter) => !filter.includes(key));
       currentFilters.push(`${key}=${value}`);
 
+      
       return router.push(`${pathname}?${currentFilters.join("&")}`);
     }
   };

@@ -12,9 +12,12 @@ interface Props {
   }[];
 }
 export default function Dropdown({ options, label }: Props) {
+  const params = useSearchParams();
+  const def_label = params.get(label);
+  const def_id = options.find((option) => option.name === def_label)?.id;
   const [selected, setSelected] = useState({
-    id: 0,
-    name: `select ${label}`,
+    id: def_id ? def_id : 0,
+    name: `${def_label ? def_label : "select " + label}`,
   });
   const [query, setQuery] = useState("");
   const { mutate } = useFilters();

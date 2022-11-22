@@ -11,9 +11,12 @@ interface Props {
 }
 export default function Card({ data }: Props) {
   return (
-    <Link href={`/movies/${data.id}`}>
+    <Link
+      href={`/${data.media_type === "movie" ? "movie" : "serieses"}/${data.id}`}
+    >
       <div className="w-full flex flex-col gap-3 pb-3 overflow-hidden border border-light-gray rounded-3xl cardAspect relative group cursor-pointer">
         <Image
+          
           src={
             data.poster_path
               ? getImageUrl(data.poster_path, "w780")

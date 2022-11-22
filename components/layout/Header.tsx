@@ -44,14 +44,16 @@ function Header() {
     };
   }, []);
   return (
-    <header className="   bg-darkest   flex  justify-between gap-3 px-3 w-full z-50">
-      <div className="flex flex-col p-3 md:p-5 justify-center gap-3 w-full  md:max-w-[65%] relative  ">
+    <header className=" absolute  top-2 w-full     z-[9999]">
+      <div className="flex flex-col p-3 md:p-5 justify-center gap-3 w-2/3 lg:w-1/2 mx-auto   relative  ">
         <input
+          autoComplete="off"
+          autoCorrect="off"
           type="text"
           name="search"
           id="search"
           placeholder="search"
-          className=" text-white/90 border-2 outline-none   border-light-gray px-4  h-8 md:h-10   rounded-2xl  md:rounded-3xl bg-transparent placeholder:text-light-gray"
+          className=" text-white/90 border-2 outline-none   border-white/70 px-4  h-8 md:h-10   rounded-2xl  md:rounded-3xl bg-transparent placeholder:text-white/70 focus:backdrop-blur-lg focus:bg-slate-400/50  "
           value={term}
           onChange={(e) => setTerm(e.target.value)}
         />
@@ -62,12 +64,12 @@ function Header() {
         {results.length > 0 && isOpen && (
           <section
             ref={searchResRef}
-            className="space-y-3 bg-dark shadow-lg z-50 shadow-black border text-white/90 border-light-gray/60 rounded-2xl   h-64 overflow-y-scroll absolute top-20"
+            className="space-y-3 bg-dark/80 shadow-lg z-50 shadow-black border text-white/90 border-white/60 rounded-2xl   h-64 overflow-y-scroll absolute top-20"
           >
             {results.map((result) => (
               <Link
                 onClick={() => setIsOpen(false)}
-                href={`/movies/${result.id}`}
+                href={`/movie/${result.id}`}
                 key={result.id}
                 className="grid grid-cols-[auto_1fr] gap-3 p-5 items-center border-b border-light-gray/30 pb-3 transition-all ease-in duration-200 hover:bg-darkest hover:border-light-gray cursor-pointer"
               >
@@ -102,23 +104,6 @@ function Header() {
             ))}
           </section>
         )}
-      </div>
-      {/* Account */}
-      <div className=" items-center justify-center gap-3 px-4 hidden md:flex ">
-        <div className="  w-14 h-14 bg-slate-500 rounded-full relative border-2 border-red">
-          <Image
-            src={
-              "https://uploads.dailydot.com/2022/07/the-boys-meme.jpg?auto=compress&fm=pjpg"
-            }
-            fill
-            alt="profile"
-            className="object-cover rounded-full"
-          />
-        </div>
-        <span className="leading-5 text-sm">
-          <h2 className=" font-medium text-slate-200">Homelander</h2>
-          <span className="text-light-gray/60">@crayingbaby</span>
-        </span>
       </div>
     </header>
   );

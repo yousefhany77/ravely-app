@@ -15,11 +15,6 @@ const nextConfig = {
         destination: "/explore/movies",
         permanent: true,
       },
-      {
-        source: "/upcoming",
-        destination: "/upcoming/movies",
-        permanent: true,
-      },
     ];
   },
   images: {

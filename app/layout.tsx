@@ -18,8 +18,8 @@ export default function RootLayout({
         <Sidebar />
         {/* main */}
 
-        <main className="relative w-full h-full flex-1 ">
-          <Header />
+        <main className="relative w-full h-full flex-1  ">
+            <Header />
           {children}
         </main>
       </body>

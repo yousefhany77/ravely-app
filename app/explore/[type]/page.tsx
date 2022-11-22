@@ -41,13 +41,11 @@ const getDicoverList = async (type: "movies" | "seasons" , searchParams: any) =>
     )}&include_null_first_air_dates=false&with_watch_monetization_types=flatrate&with_status=0&with_type=4&watch_region=US`;
     const res = await fetch(url);
     const data = await res.json();
-    console.log(url);
     return data;
   }
 };
 
 async function page({ searchParams, params: { type } }: Props) {
-  console.log(type);
   const data: ListResponse = await getDicoverList(type, searchParams);
   return (
     <div className=" h-full  text-white px-10">
