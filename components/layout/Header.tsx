@@ -69,7 +69,9 @@ function Header() {
             {results.map((result) => (
               <Link
                 onClick={() => setIsOpen(false)}
-                href={`/movie/${result.id}`}
+                href={`/${
+                  result.media_type === "movie" ? "movie" : "serieses"
+                }/${result.id}`}
                 key={result.id}
                 className="grid grid-cols-[auto_1fr] gap-3 p-5 items-center border-b border-light-gray/30 pb-3 transition-all ease-in duration-200 hover:bg-darkest hover:border-light-gray cursor-pointer"
               >

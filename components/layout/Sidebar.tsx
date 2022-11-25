@@ -26,7 +26,7 @@ import { useSelectedLayoutSegments } from "next/navigation";
 function Sidebar() {
   const path = useSelectedLayoutSegments();
   const [active, setActive] = React.useState(() => {
-    // use switch case 
+    // use switch case
     if (path.length === 0) return 0;
     else if (path[0] === "explore") return 1;
     else if (path[0] === "upcoming") return 3;
@@ -70,9 +70,7 @@ function Sidebar() {
         />
       </Link>
       {/* Menu */}
-      <section
-     
-      className=" relative flex flex-col gap-5  self-start mr-3">
+      <section className=" relative flex flex-col gap-5  self-start mr-3">
         <span className=" my-3 ml-5 font-medium hidden md:block">Menu</span>
         {/* Home */}
         <Link

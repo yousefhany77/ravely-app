@@ -1,4 +1,4 @@
-import Card from "../components/card/Card";
+import Card from "../components/cards/MovieCard";
 import Carousel from "../components/layout/carousel";
 import { ListItem } from "../util/getDataListing";
 export const revalidate = 86400;

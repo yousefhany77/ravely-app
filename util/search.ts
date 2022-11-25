@@ -14,5 +14,6 @@ export type SearchResponse = [
     overview: string;
     name:string;
     title:string;
+    media_type:"tv" | "movie";
   }
 ];

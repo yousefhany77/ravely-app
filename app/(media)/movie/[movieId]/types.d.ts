@@ -1,10 +1,10 @@
 export interface MovieDetails {
   id: number;
-  title: string;
+  title?: string;
   poster_path: string;
   vote_average: number;
   media_type: string;
-  
+  original_name?: string;
 }
 
 export interface BelongsToCollection {

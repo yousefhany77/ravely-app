@@ -1,8 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import {
-  MovieDetails,
-  MovieDetails as recommendation,
-} from "../../app/(media)/movie/[movieId]/types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +6,7 @@ export default async function handler(
 ) {
   const { id } = req.query;
   const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&append_to_response=videos,credits,recommendations`
+    `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.API_KEY}&append_to_response=videos,credits,recommendations`
   );
   const data = await response.json();
   const trailers: [number] = data.videos.results
@@ -32,32 +28,29 @@ export default async function handler(
       id: cast.id,
     };
   });
-  const recommendations: [recommendation] = data.recommendations.results.map(
-    (recommendation: recommendation) => {
+  const recommendations: [seriesRecommendations] =
+    data.recommendations.results.map((recommendation: any) => {
       return {
         id: recommendation.id,
-        title: recommendation.title,
+        title: recommendation.name,
+        original_name: recommendation.original_name,
         poster_path: recommendation.poster_path,
         vote_average: recommendation.vote_average,
         media_type: recommendation.media_type,
       };
-    }
-  );
-  let collection: MovieDetails[] | null = null;
-  if (data.belongs_to_collection) {
-    const response: CollectionResopnse = await fetch(
-      `https://api.themoviedb.org/3/collection/${data.belongs_to_collection.id}?api_key=${process.env.API_KEY}&language=en-US`
-    ).then((res) => res.json());
-    collection = response.parts;
-  }
-  const movie: MoviePage = {
+    });
+  const series: SeriesPage = {
     id: data.id,
-    title: data.title,
-    collection: collection ? collection : null,
+    title: data.name,
+    seasons: data.seasons,
     overview: data.overview,
     backdrop_path: data.backdrop_path,
     vote_average: data.vote_average,
-    runtime: data.runtime,
+    // get the avg
+    episode_run_time: data.episode_run_time.reduce(
+      (accumulator: number, currentValue: number) => accumulator + currentValue,
+      0
+    ),
     vote_count: data.vote_count,
     trailers: trailers,
     poseter_path: data.poster_path,
@@ -65,9 +58,11 @@ export default async function handler(
     recommendations: recommendations
       .sort((a, b) => b.vote_average - a.vote_average)
       .slice(0, 10),
+    number_of_episodes: data.number_of_episodes,
+    number_of_seasons: data.number_of_seasons,
   };
 
-  res.status(200).send(movie);
+  res.status(200).send(series);
 }
 
 interface Video {
@@ -86,32 +81,40 @@ export interface Cast {
   profile_path: string;
 }
 
-export interface MoviePage {
+export interface SeriesPage {
   id: number;
   poseter_path: string;
-  collection?: MovieDetails[] | null;
+  seasons: Season[];
   title: string;
-  original_name?: string;
   overview: string;
   backdrop_path: string;
   vote_average: number;
   vote_count: number;
-  runtime: number;
+  episode_run_time: number;
   trailers: [number];
   cast: Cast[];
-  recommendations: recommendation[];
+  recommendations: seriesRecommendations[];
+  number_of_episodes: number;
+  number_of_seasons: number;
+}
+
+interface seriesRecommendations {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  media_type: string;
+  original_name: string;
 }
 
 export interface Collection {
   id: number;
   name: string;
 }
-
-export interface CollectionResopnse {
-  id: number;
+export interface Season {
   name: string;
-  overview: string;
+  episode_count: number;
+  id: number;
   poster_path: string;
-  backdrop_path: string;
-  parts: MovieDetails[];
+  season_number: number;
 }

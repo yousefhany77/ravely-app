@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../../components/card/Card";
+import Card from "../../../components/cards/MovieCard";
 import { ListResponse } from "../../../util/getDataListing";
 import { getGenreId } from "../../../util/getGenreId";
 import getNetworkId from "../../../util/getNetworkId";
@@ -7,12 +7,15 @@ import getSortmethoud from "../../../util/getSortmethoud";
 interface Props {
   searchParams: any;
   params: {
-    type: "movies" | "seasons" ;
+    type: "movies" | "seasons";
   };
 }
 
 // getDicoverList based on searchParams [genres , sort , provider, year]
-const getDicoverList = async (type: "movies" | "seasons" , searchParams: any) => {
+const getDicoverList = async (
+  type: "movies" | "seasons",
+  searchParams: any
+) => {
   const { sort, genre, network, year } = searchParams;
   if (type === "movies") {
     const url = `https://api.themoviedb.org/3/discover/${"movie"}?api_key=${

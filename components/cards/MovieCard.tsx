@@ -4,19 +4,31 @@ import { getImageUrl } from "../../util/getImageUrl";
 import Rating from "../Rating";
 import { AiFillPlayCircle } from "react-icons/ai";
 import Link from "next/link";
-import { ListItem } from "../../util/getDataListing";
+import { MovieDetails as Detials } from "../../app/(media)/movie/[movieId]/types";
 
 interface Props {
-  data: ListItem;
+  data: Detials;
+  className?: string;
 }
-export default function Card({ data }: Props) {
+
+export default function MovieCard({ data, className }: Props) {
+  let type;
+  switch (data.media_type) {
+    case "episode":
+      type = "serieses/episode";
+      break;
+    case "tv":
+      type = "serieses";
+      break;
+    default:
+      type = "movie";
+  }
   return (
-    <Link
-      href={`/${data.media_type === "movie" ? "movie" : "serieses"}/${data.id}`}
-    >
-      <div className="w-full flex flex-col gap-3 pb-3 overflow-hidden border border-light-gray rounded-3xl cardAspect relative group cursor-pointer">
+    <Link href={`/${type}/${data.id}`}>
+      <div
+        className={`w-full flex flex-col gap-3 pb-3 overflow-hidden border border-light-gray rounded-3xl cardAspect relative group cursor-pointer ${className} `}
+      >
         <Image
-          
           src={
             data.poster_path
               ? getImageUrl(data.poster_path, "w780")
@@ -44,7 +56,7 @@ export default function Card({ data }: Props) {
             className="text-red bg-white w-6 h-6 rounded-full shadow-lg   "
           />
           <h2 className="text-base ">
-            {data.original_title || data.title || data.name || "unknown"}
+            {data.title || data.original_name || "unknown"}
           </h2>
         </button>
       </div>

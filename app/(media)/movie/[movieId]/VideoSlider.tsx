@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { MoviePage } from "../../../../pages/api/movie";
 import { motion } from "framer-motion";
-function Slider({ trailers }: { trailers: MoviePage["trailers"] }) {
+import { AiOutlineCaretRight } from "react-icons/ai";
+function VideoSlider({ trailers }: { trailers: MoviePage["trailers"] }) {
   const [currentTrailer, setCurrentTrailer] = useState(0);
   const next = () => {
     if (currentTrailer + 1 < trailers.length) {
@@ -29,7 +30,7 @@ function Slider({ trailers }: { trailers: MoviePage["trailers"] }) {
   const variants = {
     initial: (direction: number) => ({
       opacity: 0,
-      x: 200 * direction,
+      x: 100 * direction,
     }),
     animate: {
       x: 0,
@@ -37,22 +38,22 @@ function Slider({ trailers }: { trailers: MoviePage["trailers"] }) {
     },
     exit: (direction: number) => ({
       opacity: 0,
-      x: -200 * direction,
+      x: -100 * direction,
     }),
   };
   return (
     <div className="relative h-full">
       <span
         onClick={next}
-        className="z-50 absolute top-1/2 right-5 -translate-y-1/2"
+        className=" absolute z-50 top-1/2 -translate-y-1/2 right-5  text-red bg-white/50 backdrop-blur-md shadow p-2 rounded-full  border-2 border-transparent hover:border-white transition-all ease-in-out duration-150  cursor-pointer"
       >
-        ▶️
+        <AiOutlineCaretRight size={35} />
       </span>
       <span
-        className="z-50 absolute top-1/2 left-5 -translate-y-1/2"
         onClick={prev}
+        className=" absolute z-50 top-1/2 -translate-y-1/2 left-5 rotate-180 text-red bg-white/50 backdrop-blur-md shadow p-2 rounded-full  border-2 border-transparent hover:border-white transition-all ease-in-out duration-150 cursor-pointer"
       >
-        ◀️
+        <AiOutlineCaretRight size={35} />
       </span>
       <motion.iframe
         variants={variants}
@@ -63,7 +64,7 @@ function Slider({ trailers }: { trailers: MoviePage["trailers"] }) {
         src={`https://www.youtube.com/embed/${trailers[currentTrailer]}`}
         title="YouTube video player"
         frameBorder="0"
-        allow="accelerometer;  encrypted-media; gyroscope; picture-in-picture"
+        allow="accelerometer;  encrypted-media; gyroscope; picture-in-picture "
         allowFullScreen
         key={trailers[currentTrailer]}
         custom={direction}
@@ -71,4 +72,4 @@ function Slider({ trailers }: { trailers: MoviePage["trailers"] }) {
     </div>
   );
 }
-export default Slider;
+export default VideoSlider;

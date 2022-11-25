@@ -17,6 +17,9 @@ module.exports = {
       screens: {
         "3xl": "1920px",
       },
+      fontFamily:{
+        sans: ['var(--font-nunito)'],
+      }
     },
   },
   plugins: [],
