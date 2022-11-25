@@ -1,6 +1,5 @@
 import React from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
-import Carousel from "../components/layout/carousel";
 
 function loading() {
   return (
@@ -8,7 +7,6 @@ function loading() {
       className="
     text-7xl text-white w-full h-screen p-10  my-10 opacity-90 animate-pulse "
     >
-      <Carousel title="Continue watching" />
 
       <span className="block  border-b-8 w-1/2  m-6 border-light-gray "></span>
       <section className="grid grid-cols-5 items-center gap-6 ">

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import React from "react";
 import { AiFillHeart } from "react-icons/ai";
 import EpisodeCard from "../../../../../../components/cards/MovieCard";
@@ -30,6 +31,8 @@ async function page({ params: { seriesId, season_number } }: Props) {
     `${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/serieses?id=${seriesId}`
   );
   const seriesDetails: SeriesPage = await res.json();
+  if(seriesDetails.id === undefined) notFound()
+
   const tabTitle = seriesDetails.title;
   const rating = seriesDetails.vote_average;
   const ep_runTime = seriesDetails.episode_run_time;
@@ -51,7 +54,7 @@ async function page({ params: { seriesId, season_number } }: Props) {
           <section className="p-5  absolute  top-2/3 -translate-y-2/3 w-1/2 bg-light-gray/30 backdrop-blur-lg rounded-tr-2xl rounded-br-2xl z-[51] hidden lg:block">
             <div className="flex gap-2 items-center justify-between">
               <h1 className="capitalize text-4xl my-3 font-extrabold text-red">
-                {seriesDetails.title} | Season
+                {seriesDetails.title} | S
                 {seasonDetails.season_number
                   ? seasonDetails.season_number
                   : "No title"}
@@ -67,20 +70,42 @@ async function page({ params: { seriesId, season_number } }: Props) {
               <p>
                 • Duration: {(ep_runTime / 60).toFixed(0)}h {ep_runTime % 60}m
               </p>
-              <p>• Episodes: {seasonDetails.episodes.length} </p>
+              <p>• Episodes: {seasonDetails.episodes?.length || "unknown"} </p>
 
-              <div className="flex items-center justify-end gap-3 ">
-                <button className="btn-primary px-5 py-2 rounded-xl cursor-pointer  my-2">
-                  Watch Now
-                </button>
-                <AiFillHeart
-                  className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
-                  size={30}
-                />
-              </div>
+              <AiFillHeart
+                className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
+                size={30}
+              />
             </div>
           </section>
         </div>
+        <section className="p-5 my-5 w-full  block lg:hidden">
+          <div className="flex gap-2 items-center justify-between">
+            <h1 className="capitalize text-4xl my-3 font-extrabold text-red">
+              {seriesDetails.title} | S
+              {seasonDetails.season_number
+                ? seasonDetails.season_number
+                : "No title"}
+            </h1>
+            <Rating rating={rating} />
+          </div>
+          <p className="text-justify">
+            {seasonDetails.overview
+              ? seasonDetails.overview
+              : "No overview available"}
+          </p>
+          <div className="flex justify-between items-center my-1">
+            <p>
+              • Duration: {(ep_runTime / 60).toFixed(0)}h {ep_runTime % 60}m
+            </p>
+            <p>• Episodes: {seasonDetails.episodes?.length || "unkown"} </p>
+
+            <AiFillHeart
+              className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
+              size={30}
+            />
+          </div>
+        </section>
         <section className="w-[80vw] mx-auto p-5">
           <h2 className="text-3xl font-bold my-6">Episodes</h2>
           <Slider className="md:min-w-[33%] lg:min-w-[25%] min-w-[25%]">

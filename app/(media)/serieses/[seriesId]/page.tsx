@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import React from "react";
 import { AiFillHeart } from "react-icons/ai";
 import CharacterCard from "../../../../components/cards/CharacterCard";
@@ -18,6 +19,7 @@ async function page({ params: { seriesId } }: Props) {
     `${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/serieses?id=${seriesId}`
   );
   const seriesDetails: SeriesPage = await res.json();
+  if(seriesDetails.id === undefined) notFound()
   return (
     <>
       <Head title={seriesDetails.title} />
@@ -61,15 +63,10 @@ async function page({ params: { seriesId } }: Props) {
               <p>• Episodes: {seriesDetails.number_of_episodes} </p>
               <p>• Seasons: {seriesDetails.number_of_seasons} </p>
 
-              <div className="flex items-center justify-end gap-3 ">
-                <button className="btn-primary px-5 py-2 rounded-xl cursor-pointer  my-2">
-                  Watch Now
-                </button>
-                <AiFillHeart
-                  className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
-                  size={30}
-                />
-              </div>
+              <AiFillHeart
+                className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
+                size={30}
+              />
             </div>
           </section>
         </div>
@@ -82,28 +79,17 @@ async function page({ params: { seriesId } }: Props) {
               ? seriesDetails.overview
               : "No overview available"}
           </p>
-          <div className="flex items-center justify-end gap-3 my-3">
-            <button className="btn-primary px-5 py-2 rounded-xl cursor-pointer flex-1">
-              Watch Now
-            </button>
-            <AiFillHeart
-              className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
-              size={30}
-            />
-          </div>
+
+          <AiFillHeart
+            className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
+            size={30}
+          />
         </section>
         <section className="p-5 w-full lg:w-10/12 aspect-video mx-auto">
           <h2 className="text-4xl font-bold my-6">Trailers</h2>
           <VideoSlider trailers={seriesDetails.trailers} />
         </section>
-        <section className="w-[80vw] mx-auto p-5">
-          <h2 className="text-3xl font-bold my-6">Cast</h2>
-          <Slider className="min-w-[33%] md:min-w-[25%] lg:min-w-[16%]">
-            {seriesDetails.cast.map((cast) => (
-              <CharacterCard character={cast} key={cast.id} />
-            ))}
-          </Slider>
-        </section>
+       
         <section className="w-[80vw] mx-auto p-5">
           <h2 className="text-3xl font-bold my-6">Seasons</h2>
           <Slider className="md:min-w-[33%] lg:min-w-[25%] min-w-[25%]">
@@ -116,7 +102,14 @@ async function page({ params: { seriesId } }: Props) {
             ))}
           </Slider>
         </section>
-
+        <section className="w-[80vw] mx-auto p-5">
+          <h2 className="text-3xl font-bold my-6">Cast</h2>
+          <Slider className="min-w-[33%] md:min-w-[25%] lg:min-w-[16%]">
+            {seriesDetails.cast.map((cast) => (
+              <CharacterCard character={cast} key={cast.id} />
+            ))}
+          </Slider>
+        </section>
         <section className="w-[80vw] mx-auto p-5">
           <h2 className="text-3xl font-bold my-6">Recommendations</h2>
           <Slider className="md:min-w-[33%] lg:min-w-[25%] min-w-[25%]">

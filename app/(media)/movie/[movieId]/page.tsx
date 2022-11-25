@@ -12,6 +12,7 @@ import Slider from "./Slider";
 import CharacterCard from "../../../../components/cards/CharacterCard";
 import MovieCard from "../../../../components/cards/MovieCard";
 import Rating from "../../../../components/Rating";
+import { notFound } from "next/navigation";
 const getMoveDetails = async (movieId: string) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/movie?id=${movieId}`
@@ -21,7 +22,7 @@ const getMoveDetails = async (movieId: string) => {
 };
 async function page({ params: { movieId } }: Props) {
   const movieDetails = await getMoveDetails(movieId);
-
+  if (!movieDetails.id) notFound();
   return (
     <>
       <Head title={movieDetails.title} />

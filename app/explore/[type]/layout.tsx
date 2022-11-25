@@ -74,7 +74,7 @@ async function Layout({ children, params: { type } }: Props) {
   const { genres } = await getGenres(type);
   const years = listYears();
   return (
-    <section className="">
+    <section className="mt-24 mb-6">
       <div className="w-fit lg:px-16  py-2 mx-auto border  border-light-gray rounded-2xl xl:rounded-full my-5  p-3 grid md:grid-cols-2 gap-2 xl:flex  xl:items-center xl:justify-evenly">
         <Dropdown options={genres} label="genre" />
         <Dropdown options={years} label="year" />
