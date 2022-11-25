@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import React from "react";
 import Card from "../../../components/cards/MovieCard";
+import Paginition from "../../../components/Paginition";
 import { ListResponse } from "../../../util/getDataListing";
 import { getGenreId } from "../../../util/getGenreId";
 import getNetworkId from "../../../util/getNetworkId";
@@ -17,13 +18,13 @@ const getDicoverList = async (
   type: "movies" | "seasons",
   searchParams: any
 ) => {
-  const { sort, genre, network, year } = searchParams;
+  const { sort, genre, network, year, page = 1 } = searchParams;
   if (type === "movies") {
     const url = `https://api.themoviedb.org/3/discover/${"movie"}?api_key=${
       process.env.API_KEY
     }&language=en-US&sort_by=${getSortmethoud(
       sort
-    )}&page=1&year=${year}&with_genres=${getGenreId(
+    )}&page=${page}&year=${year}&with_genres=${getGenreId(
       genre,
       "movie"
     )}&with_networks=${getNetworkId(
@@ -62,6 +63,7 @@ async function page({ searchParams, params: { type } }: Props) {
           ))}
         </div>
       </section>
+      <Paginition location={`explore/${type}`} pagesCount={data.total_pages} />
     </div>
   );
 }
