@@ -5,6 +5,9 @@ export interface MovieDetails {
   vote_average: number;
   media_type: string;
   original_name?: string;
+  episode_number?: number,
+  season_number?: number,
+  seriesId?: number,
 }
 
 export interface BelongsToCollection {

@@ -20,11 +20,11 @@ import AmazonPrime from "../Icons/AmazonPrime.svg";
 import HBO from "../Icons/HBO.svg";
 import Disney from "../Icons/Disney.svg";
 import { HiOutlineUserGroup, HiUserGroup } from "react-icons/hi";
-import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 function Sidebar() {
   const path = useSelectedLayoutSegments();
+
   const [active, setActive] = React.useState(() => {
     // use switch case
     if (path.length === 0) return 0;
@@ -59,7 +59,8 @@ function Sidebar() {
       ref={menuRef}
       className="bg-darkest  flex flex-col items-center text-light-gray gap-6 pr-2  capitalize"
     >
-      <Link href={"/"}>
+     
+      {/* <Link href={"/"}>
         <h2 className="font-bold text-3xl text-white text-center my-6 hidden md:block">
           Ravely<span className="text-red">.</span>
         </h2>
@@ -68,7 +69,7 @@ function Sidebar() {
           alt="Ravly Logo"
           className="rounded-md w-14 md:hidden my-6 "
         />
-      </Link>
+      </Link> */}
       {/* Menu */}
       <section className=" relative flex flex-col gap-5  self-start mr-3">
         <span className=" my-3 ml-5 font-medium hidden md:block">Menu</span>

@@ -26,6 +26,7 @@ const nextConfig = {
     appDir: true,
   },
   poweredByHeader: false,
+  reactStrictMode: false,
 };
 
 module.exports = nextConfig;

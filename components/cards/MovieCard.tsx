@@ -12,19 +12,19 @@ interface Props {
 }
 
 export default function MovieCard({ data, className }: Props) {
-  let type;
+  let mediaUrl;
   switch (data.media_type) {
     case "episode":
-      type = "serieses/episode";
+      mediaUrl = `serieses/${data.seriesId}/season/${data.season_number}/episode/${data.episode_number}`;
       break;
     case "tv":
-      type = "serieses";
+      mediaUrl = `serieses/${data.id}`;
       break;
     default:
-      type = "movie";
+      mediaUrl = `movie/${data.id}`;
   }
   return (
-    <Link href={`/${type}/${data.id}`}>
+    <Link href={`/${mediaUrl}`}>
       <div
         className={`w-full flex flex-col gap-3 pb-3 overflow-hidden border border-light-gray rounded-3xl cardAspect relative group cursor-pointer ${className} `}
       >
@@ -36,6 +36,10 @@ export default function MovieCard({ data, className }: Props) {
           }
           alt="movie poster"
           fill
+          sizes="(max-width: 768px) 100vw,
+          (min-width: 769px) 33vw,
+          (min-width: 1024px) 25vw,
+          20vw"
           className={`${
             data.poster_path
               ? "object-cover"

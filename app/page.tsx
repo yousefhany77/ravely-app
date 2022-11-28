@@ -1,7 +1,6 @@
 import Card from "../components/cards/MovieCard";
 import Carousel from "../components/layout/carousel";
 import { ListItem } from "../util/getDataListing";
-export const revalidate = 86400;
 export default async function Home() {
   // fetch recommended list of movies and series passed on the user's preferences and history of watched content
 
@@ -9,7 +8,7 @@ export default async function Home() {
   const trendingResponse = await fetch(
     `${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/getDataListing`,
     {
-      next: { revalidate: 86400 },
+      cache: "no-store",
     }
   );
   const { results: trending }: { results: ListItem[] } =

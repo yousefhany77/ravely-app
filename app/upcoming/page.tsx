@@ -3,13 +3,16 @@ import Card from "../../components/cards/MovieCard";
 import Paginition from "../../components/Paginition";
 import { ListResponse } from "../../util/getDataListing";
 
-async function page({
-  searchParams: { page = "1" },
-}: {
-  searchParams: { page: string };
-}) {
+interface Props {
+  searchParams?: { page: string };
+}
+
+async function Page({ searchParams }: Props) {
   const data: ListResponse = await fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&page=${page}`
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=54095c148fb928ecb6191c64df56e75f&language=en-US&page=${searchParams?.page}`,
+    {
+      cache: "no-store",
+    }
   ).then((response) => response.json());
   return (
     <div className=" h-full  text-white px-10 mt-20">
@@ -26,4 +29,4 @@ async function page({
   );
 }
 
-export default page;
+export default Page;

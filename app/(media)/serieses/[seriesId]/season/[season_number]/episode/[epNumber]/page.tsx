@@ -1,6 +1,6 @@
 import React from "react";
 interface Props {
-  params: { seriesId: string ,episodeId:string };
+  params: { seriesId: string; episodeId: string };
 }
 function page({ params }: Props) {
   return (
