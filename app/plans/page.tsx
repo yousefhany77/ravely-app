@@ -3,7 +3,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import React, { useEffect } from "react";
 import Plan from "../../components/plans/Plan";
 import { AuthProvider } from "../../context/authContext";
-import { db } from "../../firebase/firebase-init";
+import { createPortalLink, db } from "../../firebase/firebase-init";
 
 function Page() {
   const [plans, setPlans] = React.useState<Plan[]>([]);
@@ -19,12 +19,16 @@ function Page() {
           plans.price = priceDoc.data();
           plans.price.priceId = priceDoc.id;
         });
-        setPlans((prev) => [...prev, plans]);
+        setPlans((prev) =>
+          [...prev, plans].sort(
+            (a, b) => a.price.unit_amount - b.price.unit_amount
+          )
+        );
       });
     };
     getData();
+    return setPlans([]);
   }, []);
-  console.log(plans);
   if (plans.length === 0) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -32,10 +36,19 @@ function Page() {
       </div>
     );
   }
+  // const viewMyPlan = async () => {
+  //   const { data }: { data: any } = await createPortalLink({
+  //     returnUrl: window.location.origin,
+  //     locale: "auto", // Optional, defaults to "auto"
+
+  //   });
+  //   // console.log(data);
+  //   window.location.assign(data.url);
+  // };
   return (
     <AuthProvider>
       <div className="h-screen flex items-center justify-center">
-        <div className="grid grid-cols-2 max-w-fit p-5 gap-3 max-h-[30rem] mx-auto">
+        <div className="grid grid-cols-3 gap-10  p-5  place-items-center w-fit h-fit mx-auto">
           {plans?.map((plan) => (
             <Plan planDetails={plan} key={plan.planId} />
           ))}

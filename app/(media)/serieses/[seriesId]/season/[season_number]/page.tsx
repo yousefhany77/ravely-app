@@ -44,7 +44,7 @@ async function page({ params: { seriesId, season_number } }: Props) {
   const nextCookies = cookies();
   const token = nextCookies.get("token")?.value;
   const auth = getAuth(FirebaseApp);
-  const currentUser =  auth.currentUser;
+  const currentUser = auth.currentUser;
   if (currentUser) {
     const uid = currentUser.uid;
     const docRef = uid && doc(db, "favorite", uid);
@@ -90,11 +90,7 @@ async function page({ params: { seriesId, season_number } }: Props) {
                   • Episodes: {seasonDetails.episodes?.length || "unknown"}{" "}
                 </p>
 
-                <FavoriteButton
-                  isFavorite={isFavorite}
-                  mediaId={`s-${seriesId}-${season_number}`}
-                  uid={uid}
-                />
+                <FavoriteButton mediaId={`s-${seriesId}-${season_number}`} />
               </div>
             </section>
           </div>
@@ -118,11 +114,7 @@ async function page({ params: { seriesId, season_number } }: Props) {
                 • Duration: {(ep_runTime / 60).toFixed(0)}h {ep_runTime % 60}m
               </p>
               <p>• Episodes: {seasonDetails.episodes?.length || "unkown"} </p>
-              <FavoriteButton
-                isFavorite={isFavorite}
-                mediaId={`s-${seriesId}-${season_number}`}
-                uid={uid}
-              />
+              <FavoriteButton mediaId={`s-${seriesId}-${season_number}`} />
             </div>
           </section>
           <section className="w-[80vw] mx-auto p-5">

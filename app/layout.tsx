@@ -2,7 +2,6 @@ import "./globals.css";
 import Header from "../components/layout/Header";
 import { Nunito } from "@next/font/google";
 import Sidebar from "../components/layout/Sidebar";
-import SidebarHeader from "../components/layout/SidebarHeader";
 import { AuthProvider } from "../context/authContext";
 
 const nunito = Nunito({
@@ -29,7 +28,6 @@ export default async function RootLayout({
         <div className="flex bg-darkest  flex-col">
           <AuthProvider>
           {/* @ts-ignore*/}
-            <SidebarHeader />
             <Sidebar />
           </AuthProvider>
         </div>

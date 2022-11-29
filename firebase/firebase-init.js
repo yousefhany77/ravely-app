@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyDNe7q4EjoDR_x5dnXdxlbU1yYmvH99v-c",
@@ -14,3 +14,8 @@ export const FirebaseApp =
   getApps().length < 1 ? initializeApp(firebaseConfig) : getApp();
 
 export const db = getFirestore(FirebaseApp);
+const functions = getFunctions(FirebaseApp);
+export const createPortalLink = httpsCallable(
+  functions,
+  "ext-firestore-stripe-payments-createPortalLink"
+);

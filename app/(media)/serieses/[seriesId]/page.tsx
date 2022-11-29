@@ -5,6 +5,7 @@ import { AiFillHeart } from "react-icons/ai";
 import CharacterCard from "../../../../components/cards/CharacterCard";
 import MovieCard from "../../../../components/cards/MovieCard";
 import SeasonCard from "../../../../components/cards/SeasonCard";
+import UserFavorite from "../../../../components/Favorite";
 import Rating from "../../../../components/Rating";
 import { SeriesPage } from "../../../../pages/api/serieses";
 import { getImageUrl } from "../../../../util/getImageUrl";
@@ -19,7 +20,7 @@ async function page({ params: { seriesId } }: Props) {
     `${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/serieses?id=${seriesId}`
   );
   const seriesDetails: SeriesPage = await res.json();
-  if(seriesDetails.id === undefined) notFound()
+  if (seriesDetails.id === undefined) notFound();
   return (
     <>
       <Head title={seriesDetails.title} />
@@ -63,10 +64,7 @@ async function page({ params: { seriesId } }: Props) {
               <p>• Episodes: {seriesDetails.number_of_episodes} </p>
               <p>• Seasons: {seriesDetails.number_of_seasons} </p>
 
-              <AiFillHeart
-                className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
-                size={30}
-              />
+              <UserFavorite mediaId={seriesId} />
             </div>
           </section>
         </div>
@@ -80,16 +78,13 @@ async function page({ params: { seriesId } }: Props) {
               : "No overview available"}
           </p>
 
-          <AiFillHeart
-            className="text-light-gray transition-colors ease-linear duration-150 cursor-pointer hover:text-red"
-            size={30}
-          />
+          <UserFavorite mediaId={seriesId} />
         </section>
         <section className="p-5 w-full lg:w-10/12 aspect-video mx-auto">
           <h2 className="text-4xl font-bold my-6">Trailers</h2>
           <VideoSlider trailers={seriesDetails.trailers} />
         </section>
-       
+
         <section className="w-[80vw] mx-auto p-5">
           <h2 className="text-3xl font-bold my-6">Seasons</h2>
           <Slider className="md:min-w-[33%] lg:min-w-[25%] min-w-[25%]">

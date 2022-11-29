@@ -1,5 +1,4 @@
 "use client";
-
 import {
   deleteField,
   doc,
@@ -8,24 +7,43 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
+import { AuthContext, AuthProvider } from "../context/authContext";
 import { db } from "../firebase/firebase-init";
 
 interface Props {
-  isFavorite: boolean; // if the the media exists in the favorites list
-  uid: string;
   mediaId: string;
 }
 
-export default function FavoriteButton({
-  isFavorite: userValue,
-  uid,
-  mediaId,
-}: Props) {
-  const [isFavorite, setIsFav] = useState(userValue);
-
+export function FavoriteButton({ mediaId }: Props) {
+  const { isFavorite, loading, toggle } = useUserFavorite(mediaId);
   // check if the data changed
+  //   toggle watchlater
+  return loading ? (
+    <AiFillHeart
+      role="button"
+      title="toggle is favorite"
+      onClick={toggle}
+      className={`${
+        isFavorite ? "text-red" : "text-light-gray"
+      } transition-colors ease-linear duration-150 cursor-pointer hover:text-red`}
+      size={30}
+    />
+  ) : (
+    <AiFillHeart
+      size={30}
+      role="button"
+      title="toggle is favorite"
+      className="text-light-gray animate-pulse"
+    />
+  );
+}
+
+export const useUserFavorite = (mediaId: string) => {
+  const { user } = useContext(AuthContext);
+  const uid: string = user?.uid || "_";
+  const [isFavoriteState, setIsFav] = useState(false);
   useEffect(() => {
     const subscribe = onSnapshot(doc(db, "favorite", uid), (doc) => {
       if (doc.exists()) {
@@ -39,7 +57,7 @@ export default function FavoriteButton({
     };
   }, [mediaId, uid]);
 
-  //   toggle watchlater
+  //  hook methods
 
   const toggle = async () => {
     const docRef = doc(db, "favorite", uid);
@@ -65,15 +83,23 @@ export default function FavoriteButton({
     }
   };
 
+  return {
+    isFavorite: isFavoriteState,
+    loading: uid.length > 1,
+    toggle,
+  };
+};
+
+const AuthWarper = ({ children }: { children: React.ReactNode }) => {
+  return <AuthProvider>{children}</AuthProvider>;
+};
+
+const UserFavorite = ({ mediaId }: Props) => {
   return (
-    <AiFillHeart
-      role="button"
-      title="toggle is favorite"
-      onClick={toggle}
-      className={`${
-        isFavorite ? "text-red" : "text-light-gray"
-      } transition-colors ease-linear duration-150 cursor-pointer hover:text-red`}
-      size={30}
-    />
+    <AuthWarper>
+      <FavoriteButton mediaId={mediaId} />
+    </AuthWarper>
   );
-}
+};
+
+export default UserFavorite;

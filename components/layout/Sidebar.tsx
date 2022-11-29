@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { BsCompass, BsCompassFill } from "react-icons/bs";
 import Logo from "../../public/logo.png";
 import { MdMonitor } from "react-icons/md";
@@ -12,7 +12,6 @@ import {
   AiOutlineCalendar,
   AiFillSetting,
   AiOutlineSetting,
-  AiOutlineLogout,
   AiFillCaretRight,
 } from "react-icons/ai";
 import Netflix from "../Icons/Netflix.svg";
@@ -22,9 +21,18 @@ import Disney from "../Icons/Disney.svg";
 import { HiOutlineUserGroup, HiUserGroup } from "react-icons/hi";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
+import Image from "next/image";
+import { AuthContext } from "../../context/authContext";
+import SignOutButton from "../auth/SignOut";
+import LoginButton from "../auth/LoginButton";
+
 function Sidebar() {
   const path = useSelectedLayoutSegments();
-
+  const { user, loading, error } = useContext(AuthContext);
+  console.log({
+    loading,
+    error,
+  });
   const [active, setActive] = React.useState(() => {
     // use switch case
     if (path.length === 0) return 0;
@@ -59,8 +67,7 @@ function Sidebar() {
       ref={menuRef}
       className="bg-darkest  flex flex-col items-center text-light-gray gap-6 pr-2  capitalize"
     >
-     
-      {/* <Link href={"/"}>
+      <Link href={"/"}>
         <h2 className="font-bold text-3xl text-white text-center my-6 hidden md:block">
           Ravely<span className="text-red">.</span>
         </h2>
@@ -69,7 +76,7 @@ function Sidebar() {
           alt="Ravly Logo"
           className="rounded-md w-14 md:hidden my-6 "
         />
-      </Link> */}
+      </Link>
       {/* Menu */}
       <section className=" relative flex flex-col gap-5  self-start mr-3">
         <span className=" my-3 ml-5 font-medium hidden md:block">Menu</span>
@@ -206,36 +213,37 @@ function Sidebar() {
         </button>
       </section>
       {/* General */}
-      <section className="flex flex-col gap-4 mr-5 self-start">
-        <span className=" mt-3 mb-1 ml-5 font-medium hidden md:block">
-          General
-        </span>
+      {user ? (
+        <section className="flex flex-col gap-4 mr-5 self-start">
+          <span className=" mt-3 mb-1 ml-5 font-medium hidden md:block">
+            General
+          </span>
 
-        <button
-          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
-            active === 5 ? "active" : "border-transparent"
-          } `}
-          onClick={() => setActive(5)}
-        >
-          {active === 5 ? (
-            <AiFillSetting className="ml-5 " size={22} />
-          ) : (
-            <AiOutlineSetting className="ml-5 text-light-gray " size={22} />
-          )}
+          <Link
+            href={"/settings"}
+            className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
+              active === 5 ? "active" : "border-transparent"
+            } `}
+            onClick={() => setActive(5)}
+          >
+            {active === 5 ? (
+              <AiFillSetting className="ml-5 " size={22} />
+            ) : (
+              <AiOutlineSetting className="ml-5 text-light-gray " size={22} />
+            )}
 
-          <span className="hidden md:block">Settings</span>
-        </button>
-        <button
-          className={`w-full border-l-4 flex gap-4 items-center  hover:border-light-gray/40 transition-all ease ${
-            active === 6 ? "active" : "border-transparent"
-          } `}
-          onClick={() => setActive(6)}
-        >
-          <AiOutlineLogout className="ml-5 " size={22} />
-
-          <span className="hidden md:block">logout</span>
-        </button>
-      </section>
+            <span className="hidden md:block">Settings</span>
+          </Link>
+          <SignOutButton
+            className={`w-full border-l-4 flex gap-4 items-center  hover:border-light-gray/40 transition-all ease ${
+              active === 6 ? "active" : "border-transparent"
+            } `}
+            onClick={() => setActive(6)}
+          />
+        </section>
+      ) : (
+        !loading && <LoginButton onClick={() => setActive(6)} />
+      )}
       <span
         className="my-3 cursor-pointer flex items-center self-start ml-5"
         onClick={() => setIsOpen(false)}
