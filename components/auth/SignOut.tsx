@@ -24,6 +24,7 @@ function SignOutButton({ className, onClick }: Props) {
         "Content-Type": "application/json",
       },
     });
+    router.push("/");
   };
 
   return (

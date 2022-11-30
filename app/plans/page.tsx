@@ -1,9 +1,12 @@
 "use client";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 import Plan from "../../components/plans/Plan";
+import PlanSkeleton from "../../components/plans/plansSkeleton";
 import { AuthProvider } from "../../context/authContext";
-import { createPortalLink, db } from "../../firebase/firebase-init";
+import { CheckoutProvider } from "../../context/checkoutContext";
+import { db } from "../../firebase/firebase-init";
 
 function Page() {
   const [plans, setPlans] = React.useState<Plan[]>([]);
@@ -29,10 +32,18 @@ function Page() {
     getData();
     return setPlans([]);
   }, []);
+
   if (plans.length === 0) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <span>loading</span>
+      <div className="h-screen flex flex-col gap-6 items-center justify-center">
+        <h1 className="text-5xl font-extrabold my-6 text-red">
+          Choose Your Plan
+        </h1>
+        <div className="grid lg:grid-cols-3 gap-10  w-11/12   p-5  place-items-center  h-fit mx-auto">
+          {[1, 2, 3].map((plan) => (
+            <PlanSkeleton key={plan} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -46,15 +57,21 @@ function Page() {
   //   window.location.assign(data.url);
   // };
   return (
-    <AuthProvider>
-      <div className="h-screen flex items-center justify-center">
-        <div className="grid grid-cols-3 gap-10  p-5  place-items-center w-fit h-fit mx-auto">
-          {plans?.map((plan) => (
-            <Plan planDetails={plan} key={plan.planId} />
-          ))}
+    <CheckoutProvider>
+      <AuthProvider>
+        <div className="h-screen flex flex-col gap-6 items-center justify-center">
+          <ToastContainer limit={3} />
+          <h1 className="text-5xl font-extrabold my-6 text-rose-400">
+            Choose Your Plan
+          </h1>
+          <div className="grid lg:grid-cols-3 gap-10  p-5  place-items-center w-fit h-fit mx-auto">
+            {plans?.map((plan) => (
+              <Plan planDetails={plan} key={plan.planId} />
+            ))}
+          </div>
         </div>
-      </div>
-    </AuthProvider>
+      </AuthProvider>
+    </CheckoutProvider>
   );
 }
 

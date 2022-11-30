@@ -28,6 +28,7 @@ import LoginButton from "../auth/LoginButton";
 
 function Sidebar() {
   const path = useSelectedLayoutSegments();
+  console.log(path);
   const { user, loading, error } = useContext(AuthContext);
   console.log({
     loading,
@@ -46,6 +47,7 @@ function Sidebar() {
   const [isOpen, setIsOpen] = React.useState(true);
   const [showProviders, setShowProviders] = React.useState(false);
   const menuRef = React.useRef<HTMLDivElement>(null);
+  if (path[0] === "login" || path[0] === "signup" || path[0] === 'plans') return null;
   if (!isOpen) {
     return (
       <AiFillCaretRight

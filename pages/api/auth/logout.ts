@@ -8,10 +8,7 @@ export default async function handler(
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
-  if (!req.headers.authorization) {
-    return res.status(401).json({ message: "Not authorized" });
-  }
-
+  
   res.setHeader("Set-Cookie", [
     serialize("session", "", {
       httpOnly: true,
