@@ -3,6 +3,7 @@ import Header from "../components/layout/Header";
 import { Nunito } from "@next/font/google";
 import Sidebar from "../components/layout/Sidebar";
 import { AuthProvider } from "../context/authContext";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -10,7 +11,7 @@ const nunito = Nunito({
   variable: "--font-nunito",
   display: "block",
 });
-export default async function RootLayout({
+export default  function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -23,11 +24,8 @@ export default async function RootLayout({
       <head />
 
       <body className="flex   w-full">
-        {/* sidebar */}
-
         <div className="flex bg-darkest  flex-col">
           <AuthProvider>
-          {/* @ts-ignore*/}
             <Sidebar />
           </AuthProvider>
         </div>

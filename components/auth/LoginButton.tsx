@@ -23,7 +23,6 @@ function LoginButton({ className, onClick }: Props) {
           Authorization: `Bearer ${token.token}`,
         },
       });
-      setCookie("token", token.token);
       onClick && onClick();
       router.refresh();
       router.push("/");

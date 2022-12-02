@@ -1,5 +1,7 @@
+import { getAuth } from "firebase/auth";
 import Card from "../components/cards/MovieCard";
 import Carousel from "../components/layout/carousel";
+import { FirebaseApp } from "../firebase/firebase-init";
 import { ListItem } from "../util/getDataListing";
 export default async function Home() {
   // fetch recommended list of movies and series passed on the user's preferences and history of watched content
@@ -14,7 +16,10 @@ export default async function Home() {
   const { results: trending }: { results: ListItem[] } =
     await trendingResponse.json();
 
-  // fetch top rated list of movies and series
+  const auth = getAuth(FirebaseApp);
+  auth.onAuthStateChanged((user) => {
+    console.log(user);
+  });
   return (
     <main className="text-white w-full flex flex-col my-16">
       <Carousel title="Continue watching" />

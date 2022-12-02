@@ -19,3 +19,4 @@ export const createPortalLink = httpsCallable(
   functions,
   "ext-firestore-stripe-payments-createPortalLink"
 );
+

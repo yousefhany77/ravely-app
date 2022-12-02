@@ -11,19 +11,12 @@ export default async function handler(
   
   res.setHeader("Set-Cookie", [
     serialize("session", "", {
-      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       expires: new Date(0),
       path: "/",
     }),
-    serialize("token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      expires: new Date(0),
-      path: "/",
-    }),
+   
   ]);
   res.status(200).json({ message: "Success" });
 }

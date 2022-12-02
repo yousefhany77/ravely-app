@@ -28,5 +28,6 @@ const firebaseConfig = {
 export const Admin_Firebase =
   getApps().length < 1 ? initializeApp(firebaseConfig) : getApp();
 export const adminAuth = getAuth(Admin_Firebase);
-export const createSessionCookie = adminAuth.createSessionCookie;
 export const db_Admin = getFirestore();
+export const createSessionCookie = adminAuth.createSessionCookie;
+

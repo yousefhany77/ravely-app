@@ -6,6 +6,7 @@ import useDebounce from "../../hooks/useDebounce";
 import { getImageUrl } from "../../util/getImageUrl";
 import { search, SearchResponse } from "../../util/search";
 import Link from "next/link";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 function Header() {
   const [term, setTerm] = useState("");
@@ -43,6 +44,15 @@ function Header() {
       document.removeEventListener("click", () => handler);
     };
   }, []);
+  const path = useSelectedLayoutSegments();
+
+  if (
+    path.includes("login") ||
+    path.includes("signup") ||
+    path.includes("plans")
+  ) {
+    return null;
+  }
   return (
     <header className=" absolute  top-2 w-full     z-[9999]">
       <div className="flex flex-col p-3 md:p-5 justify-center gap-3 w-2/3 lg:w-1/2 mx-auto   relative  ">
