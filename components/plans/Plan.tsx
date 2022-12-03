@@ -20,6 +20,7 @@ function Plan({ planDetails }: Props) {
   const [userRole, setUserRole] = React.useState<stripeRole>(null);
   const { isCheckingout, setIsCheckingout } = useCheckout();
   user && getUserRole(user).then((res) => setUserRole(res));
+  console.log(user)
   const checkout = async (priceId: string) => {
     if (!user && !loadingUser) {
       toast.error("Please login to continue", {
@@ -44,7 +45,7 @@ function Plan({ planDetails }: Props) {
         "You already have a plan to change your plan go to your account settings",
         {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3500,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,

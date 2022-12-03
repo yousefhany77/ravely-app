@@ -1,94 +1,76 @@
-"use client";
 import { collection, getDocs } from "firebase/firestore";
-import React, { useEffect } from "react";
-import { ToastContainer } from "react-toastify";
 import Plan from "../../components/plans/Plan";
-import PlanSkeleton from "../../components/plans/plansSkeleton";
-import { AuthProvider } from "../../context/authContext";
-import { CheckoutProvider } from "../../context/checkoutContext";
 import { db } from "../../firebase/firebase-init";
+const getData = async () => {
+  const querySnapshot = await getDocs(collection(db, "products"));
+  const pricingPlans = querySnapshot.docs.map(async (plan) => {
+    let plans: any = {};
+    plans = plan.data();
+    plans.planId = plan.id;
+    const prices = await getDocs(collection(db, plan.ref.path, "prices"));
+    prices.forEach((priceDoc) => {
+      plans.price = priceDoc.data();
+      plans.price.priceId = priceDoc.id;
+    });
+    return plans;
+  });
+  return Promise.all(pricingPlans).then((plans) =>
+    plans.sort((a, b) => a.price.unit_amount - b.price.unit_amount)
+  );
+};
 
-function Page() {
-  const [plans, setPlans] = React.useState<Plan[]>([]);
-  useEffect(() => {
-    const getData = async () => {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      querySnapshot.forEach(async (plan) => {
-        let plans: any = {};
-        plans = plan.data();
-        plans.planId = plan.id;
-        const prices = await getDocs(collection(db, plan.ref.path, "prices"));
-        prices.forEach((priceDoc) => {
-          plans.price = priceDoc.data();
-          plans.price.priceId = priceDoc.id;
-        });
-        setPlans((prev) =>
-          [...prev, plans].sort(
-            (a, b) => a.price.unit_amount - b.price.unit_amount
-          )
-        );
-      });
-    };
-    getData();
-    return setPlans([]);
-  }, []);
-
-  if (plans.length === 0) {
-    return (
-      <div className="h-screen flex flex-col gap-6 items-center justify-center">
-        <h1 className="text-5xl font-extrabold my-6 text-red">
-          Choose Your Plan
-        </h1>
-        <div className="grid lg:grid-cols-3 gap-10  w-11/12   p-5  place-items-center  h-fit mx-auto">
-          {[1, 2, 3].map((plan) => (
-            <PlanSkeleton key={plan} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-  // const viewMyPlan = async () => {
-  //   const { data }: { data: any } = await createPortalLink({
-  //     returnUrl: window.location.origin,
-  //     locale: "auto", // Optional, defaults to "auto"
-
-  //   });
-  //   // console.log(data);
-  //   window.location.assign(data.url);
-  // };
+async function Page() {
+  const plans = await getData();
   return (
-    <CheckoutProvider>
-      <AuthProvider>
-        <div className="h-screen flex flex-col gap-6 items-center justify-center">
-          <ToastContainer limit={3} />
-          <h1 className="text-5xl font-extrabold my-6 text-rose-400">
-            Choose Your Plan
-          </h1>
-          <div className="grid lg:grid-cols-3 gap-10  p-5  place-items-center w-fit h-fit mx-auto">
-            {plans?.map((plan) => (
-              <Plan planDetails={plan} key={plan.planId} />
-            ))}
-          </div>
-        </div>
-      </AuthProvider>
-    </CheckoutProvider>
+    <div className="h-screen flex flex-col gap-6 items-center justify-center">
+      <h1 className="text-5xl font-extrabold my-6 text-rose-400">
+        Choose Your Plan
+      </h1>
+      <div className="grid lg:grid-cols-3 gap-10  p-5  place-items-center w-fit h-fit mx-auto">
+        {plans?.map((plan) => (
+          <Plan planDetails={plan} key={plan.planId} />
+        ))}
+      </div>
+    </div>
   );
 }
 
 export default Page;
 
 export interface Plan {
-  planId: string;
+  metadata: PricePlanMetadata;
   active: boolean;
   name: string;
-  description: string;
   role: string;
-
-  price: {
-    priceId: string;
-    active: boolean;
-    currency: string;
-    interval: "month" | "year";
-    unit_amount: number;
-  };
+  tax_code: null;
+  description: string;
+  images: any[];
+  planId: string;
+  price: Price;
 }
+
+export interface PricePlanMetadata {
+  firebaseRole: string;
+}
+
+export interface Price {
+  interval_count: number;
+  recurring: null[];
+  product: string;
+  active: boolean;
+  tax_behavior: string;
+  tiers_mode: null;
+  description: null;
+  interval: string;
+  transform_quantity: null;
+  metadata: PriceMetadata;
+  type: string;
+  billing_scheme: string;
+  currency: string;
+  unit_amount: number;
+  trial_period_days: null;
+  tiers: null;
+  priceId: string;
+}
+
+export interface PriceMetadata {}

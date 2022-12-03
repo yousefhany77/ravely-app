@@ -16,10 +16,6 @@ export default async function Home() {
   const { results: trending }: { results: ListItem[] } =
     await trendingResponse.json();
 
-  const auth = getAuth(FirebaseApp);
-  auth.onAuthStateChanged((user) => {
-    console.log(user);
-  });
   return (
     <main className="text-white w-full flex flex-col my-16">
       <Carousel title="Continue watching" />

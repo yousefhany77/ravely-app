@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import SignupForm from "../../../components/auth/SignupForm";
 import logo from "../../../public/logo.png";
 import "react-toastify/dist/ReactToastify.min.css";
 import {  AuthProvider } from "../../../context/authContext";
+import LoginForm from "../../../components/auth/LoginForm";
 function Signup() {
   return (
+    
     <AuthProvider>
       <section className="h-screen   flex flex-col items-center justify-center p-5 max-w-7xl mx-auto ">
         <div className="w-4/6 max-w-7xl bg-darkest overflow-hidden  grid md:grid-cols-[1fr_2fr] rounded-2xl   border border-light-gray/50">
@@ -17,7 +18,7 @@ function Signup() {
               className="object-contain w-16 md:w-32 py-5 md:ml-5"
             />
           </div>
-          <SignupForm />
+          <LoginForm />
         </div>
       </section>
     </AuthProvider>

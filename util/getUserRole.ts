@@ -7,6 +7,6 @@ export const getUserRole = async (user: User) => {
   }
   const {
     claims: { stripeRole },
-  } = await user.getIdTokenResult();
+  } = await user.getIdTokenResult(true);
   return stripeRole as stripeRole;
 };

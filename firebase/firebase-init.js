@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { getFirestore } from "firebase/firestore";
+import { createUserWithEmailAndPassword, getAuth ,sendEmailVerification } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyDNe7q4EjoDR_x5dnXdxlbU1yYmvH99v-c",
   authDomain: "auth-fe87e.firebaseapp.com",

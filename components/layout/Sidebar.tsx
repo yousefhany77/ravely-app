@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { memo, useContext } from "react";
 import { BsCompass, BsCompassFill } from "react-icons/bs";
 import Logo from "../../public/logo.png";
 import { MdMonitor } from "react-icons/md";
@@ -28,7 +28,7 @@ import LoginButton from "../auth/LoginButton";
 
 function Sidebar() {
   const path = useSelectedLayoutSegments();
-  const { user, loading, error } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const [active, setActive] = React.useState(() => {
     // use switch case
     if (path.length === 0) return 0;
@@ -245,7 +245,13 @@ function Sidebar() {
           />
         </section>
       ) : (
-        !loading && <LoginButton onClick={() => setActive(6)} />
+        !loading && <Link
+        href={"/login"}
+        onClick={() => setActive(6)}  className={`  
+         py-2 bg-slate-800 rounded-lg text-white font-bold w-5/6 mx-auto  hover:text-dark
+        px-4  transition-colors ease-in-out duration-200   text-center   hover:bg-white active:bg-white"  `}
+      
+      > Login</Link>
       )}
       <span
         className="my-3 cursor-pointer flex items-center self-start ml-5"
@@ -261,4 +267,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default memo(Sidebar);

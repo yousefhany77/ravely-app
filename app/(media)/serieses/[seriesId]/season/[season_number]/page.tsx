@@ -41,16 +41,6 @@ async function page({ params: { seriesId, season_number } }: Props) {
   const rating = seriesDetails.vote_average;
   const ep_runTime = seriesDetails.episode_run_time;
 
-  const nextCookies = cookies();
-  const token = nextCookies.get("token")?.value;
-  const auth = getAuth(FirebaseApp);
-  const currentUser = auth.currentUser;
-  if (currentUser) {
-    const uid = currentUser.uid;
-    const docRef = uid && doc(db, "favorite", uid);
-    const docSnap = docRef && (await getDoc(docRef));
-    const isFavorite: boolean =
-      !!docSnap && docSnap.data()?.[`s-${seriesId}-${season_number}`];
 
     return (
       <>
@@ -139,7 +129,7 @@ async function page({ params: { seriesId, season_number } }: Props) {
       </>
     );
   }
-}
+
 export default page;
 
 interface SeasonResponse {

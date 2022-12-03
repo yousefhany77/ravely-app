@@ -3,7 +3,6 @@ import Header from "../components/layout/Header";
 import { Nunito } from "@next/font/google";
 import Sidebar from "../components/layout/Sidebar";
 import { AuthProvider } from "../context/authContext";
-import { useSelectedLayoutSegments } from "next/navigation";
 
 const nunito = Nunito({
   subsets: ["latin"],

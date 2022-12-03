@@ -1,42 +1,32 @@
 "use client";
 import { useContext } from "react";
 import { useFormik } from "formik";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SyncLoader } from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
-import { signupSchema } from "./signupSchema";
 import { AuthContext } from "../../context/authContext";
-import { ErrorMessage } from "./LoginForm";
-import Link from "next/link";
+import * as Yup from "yup";
 import GoogleLogin from "./LoginButton";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useMonted from "../../hooks/useMonted";
-import { updateProfile } from "firebase/auth";
 
-function SignupForm() {
-  const { signUp, signInWithGoogle, user: userData } = useContext(AuthContext);
+function LoginForm() {
   const router = useRouter();
-  if (userData) {
-    router.push("/");
-  }
-  const { mounted } = useMonted();
+  const { login, signInWithGoogle, user: userData } = useContext(AuthContext);
+  const {mounted} = useMonted()
   const formik = useFormik({
     initialValues: {
-      username: "",
       email: "",
       password: "",
-      passwordConfirmation: "",
     },
-    validationSchema: signupSchema,
+    validationSchema: LoginSchema,
     onSubmit: async (values) => {
-      const { email, password, username } = values;
+      const { email, password } = values;
       try {
-        const user = await signUp(email, password);
+        const user = await login(email, password);
         if (user) {
-          toast.success("Account created successfully");
-          await updateProfile(user, {
-            displayName: username,
-          });
+          toast.success("Loged In successfully");
           resetForm();
           router.replace("/");
         }
@@ -61,7 +51,7 @@ function SignupForm() {
       setSubmitting(false);
       router.replace("/");
     }
-    mounted && resetForm();
+    mounted &&  resetForm();
   };
   const { errors, touched, isSubmitting, setSubmitting, resetForm, setErrors } =
     formik;
@@ -71,30 +61,13 @@ function SignupForm() {
       <ToastContainer limit={3} />
 
       <h1 className="mx-auto font-bold text-4xl my-6 text-white w-fit">
-        Sign up
+        Login
       </h1>
       <form
         onSubmit={formik.handleSubmit}
-        className=" w-full h-full  flex flex-col gap-3  items-center justify-evenly"
+        className=" w-full h-full  flex flex-col gap-3  items-center justify-evenly font-sans"
         autoComplete="off"
       >
-        <div className="form-control">
-          <label htmlFor="username" className="mx-1 text-white font-bold  ">
-            Username:
-          </label>
-          <input
-            onChange={formik.handleChange}
-            name="username"
-            className="bg-white/30 font-semibold  w-full rounded-lg border border-white overflow-hidden text-darkest placeholder:text-black/50 px-3 py-2 active:outline-none focus:outline-none focus:bg-white/60"
-            placeholder="username"
-            type="text"
-            value={formik.values.username}
-            onBlur={formik.handleBlur}
-          />
-          {errors.username && touched.username ? (
-            <ErrorMessage key={errors.username}>{errors.username}</ErrorMessage>
-          ) : null}
-        </div>
         <div className="form-control">
           <label htmlFor="email" className="mx-1 text-white font-bold  ">
             Email:
@@ -129,52 +102,74 @@ function SignupForm() {
             <ErrorMessage key={errors.password}>{errors.password}</ErrorMessage>
           ) : null}
         </div>
-        <div className="form-control">
-          <label htmlFor="password" className="mx-1 text-white font-bold  ">
-            Confirm Password:
-          </label>
-          <input
-            onChange={formik.handleChange}
-            name="passwordConfirmation"
-            className="bg-white/30 font-semibold  w-full rounded-lg border border-white overflow-hidden text-darkest placeholder:text-black/50 px-3 py-2 active:outline-none focus:outline-none focus:bg-white/60"
-            placeholder="passwordConfirmation"
-            type={"password"}
-            value={formik.values.passwordConfirmation}
-            onBlur={formik.handleBlur}
-          />
-          {errors.passwordConfirmation && touched.passwordConfirmation ? (
-            <ErrorMessage key={errors.passwordConfirmation}>
-              {errors.passwordConfirmation}
-            </ErrorMessage>
-          ) : null}
-        </div>
-        <div className="flex gap-3 items-center justify-evenly w-full opacity-90 my-2">
-          <hr className=" w-fit flex-grow bg-white" />
-          <p className="text-white ">
-            Aleary have an Account?{" "}
-            <Link className="text-black font-semibold" href={"/login"}>
-              Sign In
-            </Link>{" "}
-          </p>
-          <hr className=" w-fit flex-grow bg-white" />
-        </div>
+
         <motion.button
           layout
           type="submit"
           disabled={isSubmitting}
-          className="w-full my-2 py-2 bg-white/30 rounded-lg text-white font-bold transition-colors ease duration-200 hover:bg-white hover:text-dark disabled:bg-white/30
-        "
+          className="w-full my-2  py-2 bg-white/30 rounded-lg text-white font-bold transition-colors ease-in-out duration-200 hover:bg-white hover:text-dark disabled:bg-white/30
+            "
         >
           {isSubmitting ? (
             <SyncLoader color="rgb(190, 18, 60)" size={6} />
           ) : (
-            "Sign Up"
+            "Login"
           )}
         </motion.button>
+        <div className="flex gap-3 items-center justify-evenly w-5/6">
+          <hr className=" w-fit flex-grow bg-white/30" />
+          <p className="text-white ">or</p>
+          <hr className=" w-fit flex-grow bg-white/30" />
+        </div>
+
+        <p className="text-white ">
+          Don&apos;t have an Account?{" "}
+          <Link className="text-black font-semibold" href={"/signup"}>
+            Sign Up
+          </Link>{" "}
+        </p>
       </form>
-      <GoogleLogin onClick={signInWithGoogleHandler} className="mt-2 mb-1" />
+      <GoogleLogin onClick={signInWithGoogleHandler} className='mt-8 mb-2' />
     </div>
   );
 }
 
-export default SignupForm;
+export default LoginForm;
+
+export const ErrorMessage = ({
+  children,
+  key,
+}: {
+  children: React.ReactNode;
+  key?: any;
+}) => {
+  return (
+    <AnimatePresence>
+      <motion.p
+        key={key}
+        layout
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{
+          duration: 0.5,
+          type: "spring",
+          bounce: 0.5,
+        }}
+        className="w-full bg-white/80 p-2 border my-1 rounded-lg font-semibold  text-red shadow"
+      >
+        {children}
+      </motion.p>
+    </AnimatePresence>
+  );
+};
+
+export const LoginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Email must be a valid email")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .max(50, "Password must be less than 50 characters")
+    .required("Password is required"),
+});
