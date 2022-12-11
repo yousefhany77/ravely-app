@@ -11,14 +11,20 @@ import Link from "next/link";
 import GoogleLogin from "./LoginButton";
 import { useRouter } from "next/navigation";
 import useMonted from "../../hooks/useMonted";
-import { updateProfile } from "firebase/auth";
+import { sendEmailVerification, updateProfile } from "firebase/auth";
+import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase/firebase-init";
+import { loadStripe } from "@stripe/stripe-js";
 
 function SignupForm() {
-  const { signUp, signInWithGoogle, user: userData } = useContext(AuthContext);
+  const {
+    signUp,
+    signInWithGoogle,
+    user: userData,
+    signOut,
+  } = useContext(AuthContext);
   const router = useRouter();
-  if (userData) {
-    router.push("/");
-  }
+
   const { mounted } = useMonted();
   const formik = useFormik({
     initialValues: {
@@ -38,7 +44,38 @@ function SignupForm() {
             displayName: username,
           });
           resetForm();
-          router.replace("/");
+          await sendEmailVerification(user, {
+            url: "http://localhost:3000/login",
+          });
+          toast.info(
+            "please complete the checkout process to complete your account reigstration"
+          );
+          toast.success("Email verification sent, check your inbox and spam", {
+            autoClose: 5000,
+          });
+          await signOut();
+          const docRef = doc(db, "customers", user.uid);
+          const colRef = collection(docRef, "checkout_sessions");
+          toast.loading("Free plan checkout... ");
+          const rec = await addDoc(colRef, {
+            price: process.env.NEXT_PUBLIC_STRIPE_FREE_PLAN!,
+            success_url: `${window.location.origin}/my-space`,
+            cancel_url: "http://localhost:3000/",
+          });
+
+          onSnapshot(rec, async (snap) => {
+            const data = snap.data();
+            if (data!.error) {
+              alert(data!.error.message);
+            }
+            if (data!.sessionId) {
+              const stripe = await loadStripe(
+                process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+              );
+
+              stripe?.redirectToCheckout({ sessionId: data!.sessionId });
+            }
+          });
         }
       } catch (error: any) {
         toast.error(error.message, {

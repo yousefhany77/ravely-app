@@ -13,6 +13,7 @@ import MovieCard from "../../../../components/cards/MovieCard";
 import Rating from "../../../../components/Rating";
 import { notFound } from "next/navigation";
 import Favorite from "../../../../components/Favorite";
+import Link from "next/link";
 const getMoveDetails = async (movieId: string) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/movie?id=${movieId}`
@@ -49,6 +50,7 @@ async function page({ params: { movieId } }: Props) {
                 : getImageUrl(movieDetails.poseter_path, "w300")
             }
           />
+
           {/* labtop and desktop  view 👇 */}
           <section className="p-5  absolute  top-2/3 -translate-y-2/3 w-1/2 bg-light-gray/30 backdrop-blur-lg rounded-tr-2xl rounded-br-2xl z-[51] hidden lg:block">
             <div className="flex gap-2 items-center justify-between">
@@ -68,9 +70,12 @@ async function page({ params: { movieId } }: Props) {
                 {movieDetails.runtime % 60}m
               </p>
               <div className="flex items-center justify-end gap-3 ">
-                <button className="btn-primary px-5 py-2 rounded-xl cursor-pointer  my-2">
+                <Link
+                  href={`/movie/${movieDetails.id}/watch`}
+                  className="btn-primary px-5 py-2 rounded-xl cursor-pointer  my-2"
+                >
                   Watch Now
-                </button>
+                </Link>
                 <Favorite mediaId={`m-${movieId}`} />
               </div>
             </div>
@@ -86,9 +91,12 @@ async function page({ params: { movieId } }: Props) {
               : "No overview available"}
           </p>
           <div className="flex items-center justify-end gap-3 my-3">
-            <button className="btn-primary px-5 py-2 rounded-xl cursor-pointer flex-1">
+            <Link
+              href={`/movie/${movieDetails.id}/watch`}
+              className="btn-primary px-5 py-2 rounded-xl cursor-pointer flex-1"
+            >
               Watch Now
-            </button>
+            </Link>
 
             <Favorite mediaId={`m-${movieId}`} />
           </div>

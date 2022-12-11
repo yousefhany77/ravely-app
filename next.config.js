@@ -18,7 +18,12 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["image.tmdb.org", "uploads.dailydot.com"],
+    domains: [
+      "image.tmdb.org",
+      "uploads.dailydot.com",
+      "st3.depositphotos.com",
+      "lh3.googleusercontent.com",
+    ],
     // deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     formats: ["image/webp"],
   },

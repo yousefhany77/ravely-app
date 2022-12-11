@@ -8,13 +8,16 @@ import { AuthContext } from "../../context/authContext";
 import * as Yup from "yup";
 import GoogleLogin from "./LoginButton";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import useMonted from "../../hooks/useMonted";
+import { collection, getDocs } from "firebase/firestore";
+import { Subscription } from "../../app/(user)/account/types";
+import { db } from "../../firebase/firebase-init";
 
 function LoginForm() {
   const router = useRouter();
   const { login, signInWithGoogle, user: userData } = useContext(AuthContext);
-  const {mounted} = useMonted()
+  const { mounted } = useMonted();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,18 +28,32 @@ function LoginForm() {
       const { email, password } = values;
       try {
         const user = await login(email, password);
+
         if (user) {
           toast.success("Loged In successfully");
           resetForm();
-          router.replace("/");
+          redirect("/my-space");
         }
       } catch (error: any) {
-        toast.error(error.message, {
-          hideProgressBar: true,
-          bodyStyle: {
-            textTransform: "capitalize",
-          },
-        });
+        if (error === "You must be subscribed to access Ravely") {
+          toast.error(error, {
+            hideProgressBar: true,
+            autoClose: 5000,
+            onClose: () => {
+              router.push("/plans");
+            },
+            bodyStyle: {
+              textTransform: "capitalize",
+            },
+          });
+        } else {
+          toast.error(error.code || `${error}`, {
+            hideProgressBar: true,
+            bodyStyle: {
+              textTransform: "capitalize",
+            },
+          });
+        }
       } finally {
         mounted && setSubmitting(false);
       }
@@ -44,14 +61,36 @@ function LoginForm() {
   });
   const signInWithGoogleHandler = async () => {
     setSubmitting(true);
-    setErrors({});
-    const user = await signInWithGoogle();
-    if (user) {
-      toast.success("Loged In successfully");
-      setSubmitting(false);
-      router.replace("/");
+    try {
+      setErrors({});
+      const user = await signInWithGoogle();
+      if (user) {
+        toast.success("Loged In successfully",{
+          autoClose: 3000,
+          onClose: () => {
+            // router.replace("/my-space")
+            redirect("/my-space");
+          }
+        });
+       
+      }
+    } catch (error) {
+      if (error === "You must be subscribed to access Ravely") {
+        toast.error(error, {
+          hideProgressBar: true,
+          autoClose: 5000,
+          onClose: () => {
+            toast.loading("Redirecting to plans page");
+            router.push("/plans");
+          },
+          bodyStyle: {
+            textTransform: "capitalize",
+          },
+        });
+      }
+    } finally {
+      mounted && setSubmitting(false);
     }
-    mounted &&  resetForm();
   };
   const { errors, touched, isSubmitting, setSubmitting, resetForm, setErrors } =
     formik;
@@ -122,14 +161,25 @@ function LoginForm() {
           <hr className=" w-fit flex-grow bg-white/30" />
         </div>
 
-        <p className="text-white ">
-          Don&apos;t have an Account?{" "}
-          <Link className="text-black font-semibold" href={"/signup"}>
-            Sign Up
-          </Link>{" "}
-        </p>
+        <div className="flex   justify-between min-w-full">
+          <Link
+            className="text-black font-semibold hover:underline"
+            href={"/forgot-password"}
+          >
+            Forgot Password
+          </Link>
+          <p className="text-white ">
+            Don&apos;t have an Account?{" "}
+            <Link
+              className="text-black font-semibold hover:underline"
+              href={"/signup"}
+            >
+              Sign Up
+            </Link>{" "}
+          </p>
+        </div>
       </form>
-      <GoogleLogin onClick={signInWithGoogleHandler} className='mt-8 mb-2' />
+      <GoogleLogin onClick={signInWithGoogleHandler} className="mt-8 mb-2" />
     </div>
   );
 }

@@ -5,6 +5,8 @@ import PromtUserReAuthwithPassword from "../../../components/auth/PromtUserReAut
 import { AuthContext, AuthProvider } from "../../../context/authContext";
 import logo from "../../../public/logo.png";
 import "react-toastify/dist/ReactToastify.min.css";
+import { SyncLoader } from "react-spinners";
+import { redirect } from "next/navigation";
 
 function Page() {
   return (
@@ -17,8 +19,8 @@ function Page() {
 export default Page;
 
 const ReauthenticateForm = memo(function Form() {
-  const { user } = useContext(AuthContext);
-  if (user) {
+  const { user, loading } = useContext(AuthContext);
+  if (user && !loading) {
     console.log("here");
     return (
       <section className="h-screen   flex flex-col items-center justify-center p-5 max-w-7xl mx-auto ">
@@ -34,14 +36,13 @@ const ReauthenticateForm = memo(function Form() {
         </div>
       </section>
     );
-  } else {
+  } else if (loading && !user) {
     return (
-      <div>
-        <h1 className="text-center text-5xl font-extrabold text-gray-900">
-          login please
-        </h1>
+      <div className="h-screen w-full flex items-center justify-center">
+        <SyncLoader color="rgb(190, 18, 60)" size={16} loading={true} className='animate-pulse' />
       </div>
     );
+  } else {
+    redirect("/login");
   }
 });
-

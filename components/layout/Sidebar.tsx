@@ -36,7 +36,7 @@ function Sidebar() {
     else if (path[0] === "upcoming") return 3;
     else if (path[0] === "watchlist") return 2;
     else if (path[0] === "party") return 4;
-    else if (path[0] === "settings") return 5;
+    else if (path[0] === "Account") return 5;
     else return undefined;
   });
   const [isOpen, setIsOpen] = React.useState(true);
@@ -70,7 +70,7 @@ function Sidebar() {
       ref={menuRef}
       className="bg-darkest  flex flex-col items-center text-light-gray gap-6 pr-2  capitalize"
     >
-      <Link href={"/"}>
+      <Link prefetch={false} href={"/my-space"}>
         <h2 className="font-bold text-3xl text-white text-center my-6 hidden md:block">
           Ravely<span className="text-red">.</span>
         </h2>
@@ -85,7 +85,8 @@ function Sidebar() {
         <span className=" my-3 ml-5 font-medium hidden md:block">Menu</span>
         {/* Home */}
         <Link
-          href={"/"}
+          prefetch={false}
+          href={"/my-space"}
           className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${
             active === 0 ? "active" : "border-transparent"
           } `}
@@ -101,6 +102,7 @@ function Sidebar() {
         </Link>
         {/* Explore */}
         <Link
+          prefetch={false}
           href={"/explore/movies"}
           className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
             active === 1 ? "active" : "border-transparent"
@@ -117,6 +119,7 @@ function Sidebar() {
         </Link>
         {/* Coming soon */}
         <Link
+          prefetch={false}
           href={"/upcoming"}
           className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
             active === 3 ? "active" : "border-transparent"
@@ -135,6 +138,7 @@ function Sidebar() {
         </Link>
         {/* Watchlist */}
         <Link
+          prefetch={false}
           href={"/watchlist"}
           className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${
             active === 2 ? "active" : "border-transparent"
@@ -167,6 +171,7 @@ function Sidebar() {
           <div className=" absolute z-50 bg-gray-800 shadow flex   rounded-xl  gap-3   px-3 justify-center items-center bottom-0 left-full translate-x-9 translate-y-3 ">
             <Link
               className="hover:scale-125 hover:mx-2 transition-all ease-in-out duration-150"
+              prefetch={false}
               href={"/explore/serieses?&network=Netflix"}
               onClick={() => setShowProviders(false)}
             >
@@ -174,6 +179,7 @@ function Sidebar() {
             </Link>
             <Link
               className="hover:scale-125 hover:mx-2 transition-all ease-in-out duration-150"
+              prefetch={false}
               href={"/explore/serieses?network=Amazon Prime"}
               onClick={() => setShowProviders(false)}
             >
@@ -181,6 +187,7 @@ function Sidebar() {
             </Link>
             <Link
               className="hover:scale-125 hover:mx-2 transition-all ease-in-out duration-150"
+              prefetch={false}
               href={"/explore/serieses?network=HBO"}
               onClick={() => setShowProviders(false)}
             >
@@ -188,6 +195,7 @@ function Sidebar() {
             </Link>
             <Link
               className="hover:scale-125 hover:mx-2 transition-all ease-in-out duration-150"
+              prefetch={false}
               href={"/explore/serieses?network=Disney"}
               onClick={() => setShowProviders(false)}
             >
@@ -195,25 +203,6 @@ function Sidebar() {
             </Link>
           </div>
         )}
-      </section>
-      {/* social */}{" "}
-      <section className="flex flex-col gap-2 mr-5 self-start">
-        <span className=" my-3 ml-5 font-medium hidden md:block">Social</span>
-
-        <button
-          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
-            active === 4 ? "active" : "border-transparent"
-          } `}
-          onClick={() => setActive(4)}
-        >
-          {active === 4 ? (
-            <HiUserGroup className="ml-5 " size={22} />
-          ) : (
-            <HiOutlineUserGroup className="ml-5 text-light-gray " size={22} />
-          )}
-
-          <span className="hidden md:block">Party</span>
-        </button>
       </section>
       {/* General */}
       {user ? (
@@ -223,7 +212,8 @@ function Sidebar() {
           </span>
 
           <Link
-            href={"/settings"}
+            prefetch={false}
+            href={"/account"}
             className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
               active === 5 ? "active" : "border-transparent"
             } `}
@@ -235,7 +225,7 @@ function Sidebar() {
               <AiOutlineSetting className="ml-5 text-light-gray " size={22} />
             )}
 
-            <span className="hidden md:block">Settings</span>
+            <span className="hidden md:block">Account</span>
           </Link>
           <SignOutButton
             className={`w-full border-l-4 flex gap-4 items-center  hover:border-light-gray/40 transition-all ease ${
@@ -245,13 +235,19 @@ function Sidebar() {
           />
         </section>
       ) : (
-        !loading && <Link
-        href={"/login"}
-        onClick={() => setActive(6)}  className={`  
+        !loading && (
+          <Link
+            prefetch={false}
+            href={"/login"}
+            onClick={() => setActive(6)}
+            className={`  
          py-2 bg-slate-800 rounded-lg text-white font-bold w-5/6 mx-auto  hover:text-dark
         px-4  transition-colors ease-in-out duration-200   text-center   hover:bg-white active:bg-white"  `}
-      
-      > Login</Link>
+          >
+            {" "}
+            Login
+          </Link>
+        )
       )}
       <span
         className="my-3 cursor-pointer flex items-center self-start ml-5"

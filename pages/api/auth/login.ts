@@ -14,6 +14,7 @@ export default async function handler(
 
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
   const token = req.headers.authorization?.split("Bearer")[1].trim();
+  console.log(token);
   res.setHeader(
     "Set-Cookie",
     serialize("session", token, {

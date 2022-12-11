@@ -1,12 +1,12 @@
 "use client";
 import { loadStripe } from "@stripe/stripe-js";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import { Plan as PlanDetails } from "../../app/plans/page";
 import { AuthContext } from "../../context/authContext";
 import { db } from "../../firebase/firebase-init";
 import { getUserRole, stripeRole } from "../../util/getUserRole";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SyncLoader } from "react-spinners";
 import { useCheckout } from "../../context/checkoutContext";
@@ -17,10 +17,9 @@ interface Props {
 
 function Plan({ planDetails }: Props) {
   const { user, loading: loadingUser } = useContext(AuthContext);
-  const [userRole, setUserRole] = React.useState<stripeRole>(null);
+  const [userRole, setUserRole] = useState<stripeRole>(null);
   const { isCheckingout, setIsCheckingout } = useCheckout();
   user && getUserRole(user).then((res) => setUserRole(res));
-  console.log(user)
   const checkout = async (priceId: string) => {
     if (!user && !loadingUser) {
       toast.error("Please login to continue", {
@@ -50,7 +49,7 @@ function Plan({ planDetails }: Props) {
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
-         
+
           theme: "light",
         }
       );
@@ -64,8 +63,8 @@ function Plan({ planDetails }: Props) {
       const colRef = collection(docRef, "checkout_sessions");
       const rec = await addDoc(colRef, {
         price: priceId,
-        success_url: window.location.origin,
-        cancel_url: "http://localhost:3000/watchlist",
+        success_url: `${window.location.origin}/my-space`,
+        cancel_url: "http://localhost:3000/",
       });
 
       onSnapshot(rec, async (snap) => {

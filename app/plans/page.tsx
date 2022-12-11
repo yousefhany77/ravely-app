@@ -26,6 +26,7 @@ async function Page() {
       <h1 className="text-5xl font-extrabold my-6 text-rose-400">
         Choose Your Plan
       </h1>
+
       <div className="grid lg:grid-cols-3 gap-10  p-5  place-items-center w-fit h-fit mx-auto">
         {plans?.map((plan) => (
           <Plan planDetails={plan} key={plan.planId} />

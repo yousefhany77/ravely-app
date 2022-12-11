@@ -10,7 +10,7 @@ const nunito = Nunito({
   variable: "--font-nunito",
   display: "block",
 });
-export default  function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -22,7 +22,7 @@ export default  function RootLayout({
     >
       <head />
 
-      <body className="flex   w-full">
+      <body className="flex  h-full w-full">
         <div className="flex bg-darkest  flex-col">
           <AuthProvider>
             <Sidebar />
