@@ -6,7 +6,11 @@ const useSocket = (): { socket: Socket | null; loading: boolean } => {
   useEffect(() => {
     (async () => {
       await fetch("/api/socket/video");
-      const socket = io();
+      const socket = io(window?.location?.host, {
+        reconnectionDelay: 1000,
+        reconnection: true,
+        reconnectionAttempts: 10,
+      });
       setSocket(socket);
     })();
     console.log(socket);
