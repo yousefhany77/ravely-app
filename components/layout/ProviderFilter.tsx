@@ -37,7 +37,7 @@ export default function Dropdown({ options, label }: Props) {
     <div className="flex items-center gap-2">
       <label
         htmlFor={label}
-        className="font-medium text-white text-lg capitalize"
+        className="sr-only"
       >
         {label}:
       </label>

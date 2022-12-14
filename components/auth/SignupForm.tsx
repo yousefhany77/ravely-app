@@ -107,7 +107,7 @@ function SignupForm() {
     <div className=" rounded-l-2xl form-shadow bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-rose-700 to-orange-300 via-red flex flex-col items-center justify-center p-6">
       <ToastContainer limit={3} />
 
-      <h1 className="mx-auto font-bold text-4xl my-6 text-white w-fit">
+      <h1 className="mx-auto font-bold text-2xl lg:text-4xl my-6 text-white w-fit">
         Sign up
       </h1>
       <form

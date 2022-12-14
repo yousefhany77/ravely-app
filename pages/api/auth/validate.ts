@@ -1,5 +1,3 @@
-import { serialize } from "cookie";
-import { deleteCookie, setCookie } from "cookies-next";
 import { NextApiResponse } from "next";
 import { NextApiRequest } from "next";
 import { adminAuth } from "../../../firebase/firebase-admin";
@@ -28,8 +26,12 @@ export default async function handler(
       return res.status(401).json({ message: "Email not verified" });
     }
     return res.status(200).json({ message: "success" });
-  } catch (error) {
-    console.log(error);
+  } catch (error:any) {
+    // console.log(error);
+    if (error.code === "auth/id-token-expired") {
+      // console.log(error);
+      return res.status(200).json({ message: "success" });
+    }
     adminAuth.revokeRefreshTokens(uid).then(() => {
       console.log(uid, "revoked ⚠️👮");
     });

@@ -9,7 +9,7 @@ function loading() {
     >
 
       <span className="block  border-b-8 w-1/2  m-6 border-light-gray "></span>
-      <section className="grid grid-cols-5 items-center gap-6 ">
+      <section className="grid  md:grid-cols-3 lg:grid-cols-4  3xl:grid-cols-5 gap-6 ">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
           <div
             key={item}

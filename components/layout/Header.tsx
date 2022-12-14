@@ -48,14 +48,16 @@ function Header() {
 
   if (
     path.includes("login") ||
+    path.includes("reauth") ||
+    path.includes("forgot-password") ||
     path.includes("signup") ||
     path.includes("plans")
   ) {
     return null;
   }
   return (
-    <header className=" absolute  top-2 w-full     z-[9999]">
-      <div className="flex flex-col p-3 md:p-5 justify-center gap-3 w-2/3 lg:w-1/2 mx-auto   relative  ">
+    <header className=" max-w-7xl mx-auto w-full  p-4 mt-4 z-[999]   ">
+      <div className="flex flex-col justify-center gap-3 w-2/3 lg:w-1/2 mx-auto   relative  ">
         <input
           autoComplete="off"
           autoCorrect="off"
@@ -74,7 +76,7 @@ function Header() {
         {results.length > 0 && isOpen && (
           <section
             ref={searchResRef}
-            className="space-y-3 bg-dark/80 shadow-lg z-50 shadow-black border text-white/90 border-white/60 rounded-2xl   h-64 overflow-y-scroll absolute top-20"
+            className=" bg-dark/80 shadow-lg  shadow-black border text-white/90 border-white/60 rounded-2xl   h-64 overflow-y-scroll absolute z-[9999] top-20"
           >
             {results.map((result) => (
               <Link
@@ -83,7 +85,7 @@ function Header() {
                   result.media_type === "movie" ? "movie" : "serieses"
                 }/${result.id}`}
                 key={result.id}
-                className="grid grid-cols-[auto_1fr] gap-3 p-5 items-center border-b border-light-gray/30 pb-3 transition-all ease-in duration-200 hover:bg-darkest hover:border-light-gray cursor-pointer"
+                className="grid grid-cols-[auto_1fr] gap-3 p-5 items-center border-b border-light-gray/30  transition-all ease-in duration-200 hover:bg-darkest hover:border-light-gray cursor-pointer"
               >
                 <Image
                   src={getImageUrl(result.poster_path)}

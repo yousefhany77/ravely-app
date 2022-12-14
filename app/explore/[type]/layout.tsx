@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 const getGenres = async (type: string) => {
   if (type !== "movie") type = "tv";
   const response = await fetch(
-    `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.API_KEY}&language=en-US`
+    `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US`
   );
   const data = await response.json();
   return data;
@@ -18,7 +18,7 @@ const getGenres = async (type: string) => {
 const listYears = () => {
   const curr_year = new Date().getFullYear();
   const years = [];
-  for (let i = 50; i >= 0; i--) {
+  for (let i = 0; i <= 50; i++) {
     years.push({
       id: i,
       name: `${curr_year - i}`,
@@ -74,11 +74,13 @@ async function Layout({ children, params: { type } }: Props) {
   const { genres } = await getGenres(type);
   const years = listYears();
   return (
-    <section className="mt-24 mb-6">
-      <div className="w-fit lg:px-16  py-2 mx-auto border  border-light-gray rounded-2xl xl:rounded-full my-5  p-3 grid md:grid-cols-2 gap-2 xl:flex  xl:items-center xl:justify-evenly">
+    <section className="my-6">
+      <div className="w-fit lg:px-16  py-2 mx-auto  my-5  p-3 grid md:grid-cols-2 gap-2 xl:flex  xl:items-center xl:justify-evenly">
         <Dropdown options={genres} label="genre" />
         <Dropdown options={years} label="year" />
-        {<Providers options={providers} label="network" />}
+        {type === "serieses" && (
+          <Providers options={providers} label="network" />
+        )}
         <Dropdown options={sorting} label="sort" />
       </div>
       <div className="w-fit mx-auto  text-white flex  items-center justify-center bg-light-gray  rounded-full overflow-hidden">

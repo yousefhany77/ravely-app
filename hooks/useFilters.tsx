@@ -14,13 +14,13 @@ export const useFilters = () => {
     if (!isDefined) {
       //  if the filter is not defined, add it
       currentFilters.push(`${key}=${value}`);
-      
-      return router.push(`${pathname}?${currentFilters.join("&")}`);
+
+      return window.location.assign(`${pathname}?${currentFilters.join("&")}`);
     } else {
       // if same filter is defined, remove it
       if (searchParams.get(key) === value) {
         remove(key);
-        
+
         return;
       }
       // if different filter is defined, replace it
@@ -28,14 +28,13 @@ export const useFilters = () => {
       currentFilters = currentFilters.filter((filter) => !filter.includes(key));
       currentFilters.push(`${key}=${value}`);
 
-      
-      return router.push(`${pathname}?${currentFilters.join("&")}`);
+      return window.location.assign(`${pathname}?${currentFilters.join("&")}`);
     }
   };
   const remove = (key: string) => {
     let currentFilters = searchParams.toString().split("&");
     currentFilters = currentFilters.filter((filter) => !filter.includes(key));
-    return router.push(`${pathname}?${currentFilters.join("&")}`);
+    return window.location.assign(`${pathname}?${currentFilters.join("&")}`);
   };
   return {
     mutate,

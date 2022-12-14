@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { MoviePage } from "../../../../pages/api/movie";
 import { motion } from "framer-motion";
 import { AiOutlineCaretRight } from "react-icons/ai";
+import { MoviePage } from "../../../../util/types";
 function VideoSlider({ trailers }: { trailers: MoviePage["trailers"] }) {
   const [currentTrailer, setCurrentTrailer] = useState(0);
   const next = () => {

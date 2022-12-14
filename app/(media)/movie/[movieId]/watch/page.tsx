@@ -15,11 +15,14 @@ import MovieCard from "../../../../../components/cards/MovieCard";
 import FreeVideoPlayer from "../../../../../components/video/FreeVideoPlayer";
 import LoadingPlayer from "../../../../../components/video/LoadingPlayer";
 import { AuthContext } from "../../../../../context/authContext";
-import { MoviePage } from "../../../../../pages/api/movie";
 import { getImageUrl } from "../../../../../util/getImageUrl";
 import { getUserRole, stripeRole } from "../../../../../util/getUserRole";
 import Head from "../../head";
-import Slider from "../Slider";
+import Slider from "../../../../../components/layout/Slider";
+import getMovie from "../../../../../util/getMovie";
+import { toast } from "react-toastify";
+import copyToClipboard from "../../../../../util/CopyToClipboard";
+import addToContinueWatching from "../../../../../util/addToContinueWatching";
 const PremiumVideoPlayer = lazy(
   () => import("../../../../../components/video/PremiumVideoPlayer")
 );
@@ -36,6 +39,7 @@ function Page() {
     getUserRole(user).then((role) => {
       setUserRole(role);
     });
+
     return (
       <section className="w-full max-w-7xl mx-auto ">
         <Head title={movieDetails.title} />
@@ -43,11 +47,14 @@ function Page() {
           {party ? (
             <Suspense fallback={<LoadingPlayer />}>
               <div className="flex justify-between items-center px-3  w-full ">
-                <h1 className="capitalize text-5xl font-extrabold text-white shadow-lg ">
+                <h1 className="capitalize text-3xl lg:text-5xl font-extrabold text-white shadow-lg ">
                   {movieDetails.title ? movieDetails.title : "No title"}
                 </h1>
 
-                <p className="pl-4 pr-0 bg-slate-800 rounded-lg text-slate-400 flex items-center gap-3">
+                <p
+                  className="pl-4 pr-0 bg-slate-800 rounded-lg text-slate-400 flex items-center gap-3 cursor-pointer  hover:bg-slate-700"
+                  onClick={() => copyToClipboard(party)}
+                >
                   <span>Party Id:</span>{" "}
                   <span className="bg-[#0000006b]  text-white rounded-lg p-2">
                     {party}
@@ -76,25 +83,31 @@ function Page() {
                 videoSrc="/api/video"
               />
               {userRole !== "basic" && (
-                <div className="w-full flex items-center justify-between">
-                  <div className="px-4 py-2 bg-slate-800 text-white flex items-center gap-4">
+                <div className="w-full flex items-center justify-between flex-wrap">
+                  <div className="px-4 py-2 bg-slate-800 text-white flex items-center gap-4  flex-wrap rounded-lg">
                     <p className="text-lg font-bold">Party Id:</p>
                     <input
                       onChange={(e) => setInput(e.target.value)}
                       type="text"
-                      className="bg-light-gray/25 rounded py-1 border-none outline-none focus:outline-red/25 px-2 "
+                      className="bg-light-gray/25 w-full md:w-auto  rounded py-1 border-none outline-none focus:outline-red/25 px-2 "
                     />
                     <button
                       disabled={input.length !== 10}
                       onClick={() => joinParty(user, setParty, input)}
-                      className=" px-4 bg-white text-black  py-1 rounded-lg cursor-pointer shadow-lg transition-colors ease-in-out duration-150 hover:bg-red hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                      className=" w-full md:w-auto  px-5 py-2 bg-white text-black   rounded-lg cursor-pointer shadow-lg transition-colors ease-in-out duration-150 hover:bg-red hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Join party 🎞️
+                    </button>
+                    <button
+                      onClick={() => createParty(user, setParty)}
+                      className="  w-full md:hidden btn-primary px-5 py-2 rounded-xl cursor-pointer shadow-lg   my-2"
+                    >
+                      Create party 🎞️
                     </button>
                   </div>
                   <button
                     onClick={() => createParty(user, setParty)}
-                    className=" btn-primary px-5 py-2 rounded-xl cursor-pointer shadow-lg   my-2"
+                    className="  hidden md:block btn-primary px-5 py-2 rounded-xl cursor-pointer shadow-lg   my-2"
                   >
                     Create party 🎞️
                   </button>
@@ -111,7 +124,9 @@ function Page() {
                 <MovieCard data={data} key={data.id} />
               ))}
             </Slider>
-          ) : <p>No recommendations</p>}
+          ) : (
+            <p>No recommendations</p>
+          )}
         </section>
       </section>
     );
@@ -119,14 +134,6 @@ function Page() {
 }
 
 export default Page;
-
-const getMoveDetails = async (movieId: string) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/movie?id=${movieId}`
-  );
-  const data: MoviePage = await res.json();
-  return data;
-};
 
 const createParty = (
   user: User,
@@ -183,6 +190,16 @@ const joinParty = (
   return null;
 };
 const fetchMovie = async (movieId: string) => {
-  const movieDetails = await getMoveDetails(movieId);
+  const movieDetails = await getMovie(movieId);
+  if (movieDetails) {
+    const { title, poseter_path, backdrop_path, id } = movieDetails;
+    await addToContinueWatching(`m-${id}`, {
+      mediaId: id,
+      title,
+      posterLink: getImageUrl(backdrop_path,"original") || getImageUrl(poseter_path,"original"),
+    });
+  }
+
   return movieDetails;
 };
+

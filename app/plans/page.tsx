@@ -23,7 +23,7 @@ async function Page() {
   const plans = await getData();
   return (
     <div className="h-screen flex flex-col gap-6 items-center justify-center">
-      <h1 className="text-5xl font-extrabold my-6 text-rose-400">
+      <h1 className="text-3xl lg:text-5xl font-extrabold my-6 text-rose-400">
         Choose Your Plan
       </h1>
 

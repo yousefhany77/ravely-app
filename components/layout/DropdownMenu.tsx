@@ -13,6 +13,7 @@ interface Props {
 }
 export default function Dropdown({ options, label }: Props) {
   const params = useSearchParams();
+  // filter out the default value from the url
   const def_label = params.get(label);
   const def_id = options.find((option) => option.name === def_label)?.id;
   const [selected, setSelected] = useState({
@@ -33,10 +34,7 @@ export default function Dropdown({ options, label }: Props) {
 
   return (
     <div className="flex items-center gap-2 ">
-      <label
-        htmlFor={label}
-        className="font-medium text-white text-lg capitalize"
-      >
+      <label htmlFor={label} className="sr-only">
         {label}:
       </label>
       <Combobox value={selected} onChange={setSelected}>
@@ -75,8 +73,10 @@ export default function Dropdown({ options, label }: Props) {
                       key={option.id}
                       onClick={() => mutate(label, option.name)}
                       className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                          active ? "bg-red text-white" : "text-light-gray"
+                        `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                          def_label === option.name
+                            ? "bg-red text-white"
+                            : "text-light-gray"
                         }`
                       }
                       value={option}
@@ -85,15 +85,19 @@ export default function Dropdown({ options, label }: Props) {
                         <>
                           <span
                             className={`block truncate ${
-                              selected ? "font-medium" : "font-normal"
+                              def_label === option.name
+                                ? "font-medium"
+                                : "font-normal"
                             }`}
                           >
                             {option.name}
                           </span>
-                          {selected ? (
+                          {def_label === option.name ? (
                             <span
                               className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                active ? "text-white" : "text-red"
+                                def_label === option.name
+                                  ? "text-white"
+                                  : "text-red"
                               }`}
                             >
                               <AiFillCheckCircle

@@ -8,11 +8,8 @@ import { AuthContext } from "../../context/authContext";
 import * as Yup from "yup";
 import GoogleLogin from "./LoginButton";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import useMonted from "../../hooks/useMonted";
-import { collection, getDocs } from "firebase/firestore";
-import { Subscription } from "../../app/(user)/account/types";
-import { db } from "../../firebase/firebase-init";
 
 function LoginForm() {
   const router = useRouter();
@@ -30,14 +27,17 @@ function LoginForm() {
         const user = await login(email, password);
 
         if (user) {
-          toast.success("Loged In successfully");
+          toast.success("Loged In successfully" ,{
+            autoClose: 1000,
+          });
           resetForm();
-          redirect("/my-space");
+          router.push("/my-space");
         }
       } catch (error: any) {
         if (error === "You must be subscribed to access Ravely") {
           toast.error(error, {
             hideProgressBar: true,
+            closeOnClick: true,
             autoClose: 5000,
             onClose: () => {
               router.push("/plans");
@@ -46,6 +46,7 @@ function LoginForm() {
               textTransform: "capitalize",
             },
           });
+          router.push("/plans");
         } else {
           toast.error(error.code || `${error}`, {
             hideProgressBar: true,
@@ -66,10 +67,10 @@ function LoginForm() {
       const user = await signInWithGoogle();
       if (user) {
         toast.success("Loged In successfully",{
-          autoClose: 3000,
+          autoClose: 1000,
           onClose: () => {
             // router.replace("/my-space")
-            redirect("/my-space");
+            router.push("/my-space");
           }
         });
        
@@ -99,7 +100,7 @@ function LoginForm() {
     <div className=" rounded-l-2xl form-shadow bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-rose-700 to-orange-300 via-red flex flex-col items-center justify-center p-6">
       <ToastContainer limit={3} />
 
-      <h1 className="mx-auto font-bold text-4xl my-6 text-white w-fit">
+      <h1 className="mx-auto font-bold text-2xl lg:text-4xl my-6 text-white w-fit">
         Login
       </h1>
       <form

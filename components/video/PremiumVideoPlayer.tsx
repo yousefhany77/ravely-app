@@ -1,5 +1,4 @@
 import { memo, useEffect, useRef, VideoHTMLAttributes } from "react";
-import { SyncLoader } from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import { Socket } from "socket.io-client";
 import useSocket from "../../hooks/useSocket";

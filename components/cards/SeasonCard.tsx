@@ -1,11 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import { getImageUrl } from "../../util/getImageUrl";
-import Rating from "../Rating";
 import { AiFillPlayCircle } from "react-icons/ai";
 import Link from "next/link";
-import { MovieDetails as Detials } from "../../app/(media)/movie/[movieId]/types";
-import { Season } from "../../pages/api/serieses";
+import { Season } from "../../util/getSeries";
 
 interface SeriesDetials extends Season {
   name: string;

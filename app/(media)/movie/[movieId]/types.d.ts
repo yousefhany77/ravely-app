@@ -1,5 +1,5 @@
 export interface MovieDetails {
-  id: number;
+  id: number | string;
   title?: string;
   poster_path: string;
   vote_average: number;

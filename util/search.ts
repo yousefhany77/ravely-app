@@ -12,8 +12,8 @@ export type SearchResponse = [
     poster_path: string;
     vote_average: number;
     overview: string;
-    name:string;
-    title:string;
-    media_type:"tv" | "movie";
+    name: string;
+    title: string;
+    media_type: "tv" | "movie";
   }
 ];

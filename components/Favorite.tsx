@@ -20,35 +20,37 @@ export function FavoriteButton({ mediaId }: Props) {
   const { isFavorite, loading, toggle } = useUserFavorite(mediaId);
   // check if the data changed
   //   toggle watchlater
-  return loading ? (
+  return !loading ? (
     <AiFillHeart
       role="button"
       title="toggle is favorite"
       onClick={toggle}
       className={`${
-        isFavorite ? "text-red" : "text-light-gray"
+        isFavorite ? "text-red" : "text-light-gray l"
       } transition-colors ease-linear duration-150 cursor-pointer hover:text-red`}
-      size={30}
+      size={38}
     />
   ) : (
     <AiFillHeart
-      size={30}
+      size={38}
       role="button"
-      title="toggle is favorite"
-      className="text-light-gray animate-pulse"
+      title="toggle is favorite "
+      className="text-darkest animate-pulse"
     />
   );
 }
 
 export const useUserFavorite = (mediaId: string) => {
   const { user } = useContext(AuthContext);
-  const uid: string = user?.uid || "_";
   const [isFavoriteState, setIsFav] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const uid: string = user?.uid || "_";
   useEffect(() => {
     const subscribe = onSnapshot(doc(db, "favorite", uid), (doc) => {
       if (doc.exists()) {
         // check if the mediaId  exists in the favorite list
         setIsFav(doc.data()[mediaId]);
+        setLoading(false);
       }
     });
 
@@ -85,7 +87,7 @@ export const useUserFavorite = (mediaId: string) => {
 
   return {
     isFavorite: isFavoriteState,
-    loading: uid.length > 1,
+    loading,
     toggle,
   };
 };

@@ -11,7 +11,23 @@ import { SyncLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 import GoogleLogin from "./LoginButton";
 import Link from "next/link";
-
+import { FirebaseApp } from "../../firebase/firebase-init";
+const handdler = async (event: any) => {
+  const signout = async () => {
+    const getAuth = (await import("firebase/auth")).getAuth;
+    const auth = getAuth(FirebaseApp);
+    await auth.signOut();
+    await fetch("api/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+  event.preventDefault();
+  await signout();
+  return toast.error("Please re-authenticate");
+};
 function PromtUserReAuthwithPassword() {
   const router = useRouter();
   const {
@@ -27,6 +43,7 @@ function PromtUserReAuthwithPassword() {
     }
     try {
       await reAuthWithProvider(userData);
+      window.removeEventListener("beforeunload", handdler);
       toast.success("Successfully re-authenticated", {
         autoClose: 2000,
         onClose: () => router.back(),
@@ -63,6 +80,7 @@ function PromtUserReAuthwithPassword() {
       const { password } = values;
       try {
         userData && (await reAuthUser(userData, password));
+        window.removeEventListener("beforeunload", handdler);
         toast.success(`Welcome back ${userData?.displayName}`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 5000,
@@ -103,23 +121,16 @@ function PromtUserReAuthwithPassword() {
     },
   });
   useEffect(() => {
+    // @ts-ignore
+    const lastAuth = Number(userData?.metadata.lastLoginAt) || 0;
+    const date = new Date(lastAuth).getMinutes();
     if (typeof window !== "undefined") {
-      window.addEventListener(
-        "beforeunload",
-        (event) => {
-          event.preventDefault();
-          event.returnValue = "Please re-authenticate";
-          signOut().then(() =>
-            window.removeEventListener("beforeunload", () => {})
-          );
-        },
-        { capture: true }
-      );
+      window.addEventListener("beforeunload", handdler);
     }
     return () => {
-      window.removeEventListener("beforeunload", () => {});
+      window.removeEventListener("beforeunload", handdler);
     };
-  }, [values.password]);
+  }, []);
   return (
     <div className="  rounded-l-2xl form-shadow bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-rose-700 to-orange-300 via-red flex flex-col items-center justify-center p-6">
       <ToastContainer limit={3} />

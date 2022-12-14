@@ -18,19 +18,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunito.variable} font-sans bg-zinc-900 h-full `}
+      className={`${nunito.variable} font-sans bg-zinc-900 w-auto `}
     >
       <head />
 
-      <body className="flex  h-full w-full">
-        <div className="flex bg-darkest  flex-col">
-          <AuthProvider>
-            <Sidebar />
-          </AuthProvider>
-        </div>
+      <body className="flex">
+        <AuthProvider>
+          <Sidebar />
+        </AuthProvider>
+
         {/* main */}
 
-        <main className="relative w-full h-full flex-1  ">
+        <main className="relative w-full h-full max-w-[120rem] mx-auto overflow-x-hidden">
           <Header />
           {children}
         </main>

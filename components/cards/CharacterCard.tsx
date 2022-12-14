@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import { Cast } from "../../pages/api/movie";
 import { getImageUrl } from "../../util/getImageUrl";
+import { Cast } from "../../util/types";
 
 interface Props {
   character: Cast;
@@ -11,9 +11,9 @@ interface Props {
 function CharacterCard({ character, className }: Props) {
   return (
     <div
-      className={`bg-darkest border border-light-gray shadow w-full h-full rounded-2xl overflow-hidden aspect-[1/1.6]  text-center flex flex-col ${className}`}
+      className={`bg-darkest border border-light-gray shadow w-full h-full rounded-2xl overflow-hidden aspect-[1/1.6] relative  text-center flex flex-col group ${className}`}
     >
-      <div className="bg-red h-3/4 w-full  relative pointer-events-none">
+      <div className="bg-red h-full w-full   pointer-events-none">
         <Image
           src={
             character.profile_path
@@ -25,9 +25,12 @@ function CharacterCard({ character, className }: Props) {
           className="object-cover object-top"
         />
       </div>
-      <div className="flex flex-col  bg-rose-900 h-fit items-center justify-center flex-grow  ">
-        <h2 className="text-white font-bold text-lg">{character.name}</h2>
-        <h2 className="text-black font-medium ">{character.character}</h2>
+      <h2 className="text-white font-bold lg:text-lg z-[49] absolute bottom-0 py-2 left-1/2 -translate-x-1/2 w-full bg-red group-hover:opacity-0 transition-all duration-100 ease-in-out">{character.name}</h2>
+      <div className="flex flex-col  bg-red h-fit z-[50] items-center justify-center flex-grow p-2 gap-1 translate-y-40 group-hover:translate-y-0 transition-all duration-300 ease-in-out">
+        <h2 className="text-white font-bold lg:text-lg">{character.name}</h2>
+        <h2 className="text-slate-800 font-medium text-sm lg:text-base   ">
+          {character.character}
+        </h2>
       </div>
     </div>
   );

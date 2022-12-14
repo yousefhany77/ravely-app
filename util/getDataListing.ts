@@ -6,19 +6,19 @@ export type listType =
   | "top_rated"
   | "popular";
 const MoviesUrl = {
-  trending: `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.API_KEY}&page=`,
-  upcoming: `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.API_KEY}&page=`,
-  latest: `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}f&language=en-US&sort_by=primary_release_date.desc&include_adult=true&primary_release_year=2022&with_original_language=en&with_watch_monetization_types=flatrate&page=`,
-  top_rated: `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY}&page=`,
-  popular: `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}&page=`,
+  trending: `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
+  upcoming: `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
+  latest: `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}f&language=en-US&sort_by=primary_release_date.desc&include_adult=true&primary_release_year=2022&with_original_language=en&with_watch_monetization_types=flatrate&page=`,
+  top_rated: `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
+  popular: `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
 };
 
 const SeriesUrl = {
-  trending: `https://api.themoviedb.org/3/trending/tv/week?api_key=${process.env.API_KEY}&page=`,
-  upcoming: `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.API_KEY}&page=`,
-  latest: `https://api.themoviedb.org/3/tv/latest?api_key=${process.env.API_KEY}&page=`,
-  top_rated: `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.API_KEY}&page=`,
-  popular: `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.API_KEY}&page=`,
+  trending: `https://api.themoviedb.org/3/trending/tv/week?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
+  upcoming: `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
+  latest: `https://api.themoviedb.org/3/tv/latest?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
+  top_rated: `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
+  popular: `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}&page=`,
 };
 
 export const getDataListing = async (

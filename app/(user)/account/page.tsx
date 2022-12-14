@@ -15,7 +15,7 @@ import { updateEmail, updateProfile } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Modal from "../../../components/Modal";
-import { SWRDevTools } from "swr-devtools";
+import Loader from "../../../components/layout/Loader/Loader";
 
 const viewMyPlan = async () => {
   const { data }: { data: any } = await createPortalLink({
@@ -26,8 +26,7 @@ const viewMyPlan = async () => {
 };
 function Page() {
   return (
-    <SWRDevTools>
-      <main className="h-screen w-full max-w-7xl mx-auto flex flex-col items-center justify-evenly">
+      <main className="h-full p-4  w-full max-w-7xl mx-auto py-5 flex flex-col items-center justify-evenly">
         {/* Account Details */}
         <AuthProvider>
           <div className="w-full">
@@ -44,7 +43,6 @@ function Page() {
           </div>
         </AuthProvider>
       </main>
-    </SWRDevTools>
   );
 }
 
@@ -55,7 +53,7 @@ const AccountDetails = memo(function AccountDetails() {
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const { user, loading } = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
-  console.log(user);
+
 
   const { data, error } = useSWR(
     user !== null ? user.uid : null,
@@ -107,7 +105,7 @@ const AccountDetails = memo(function AccountDetails() {
           setSubmitting(false);
         }
       } catch (error) {
-        console.log(error);
+    
         setSubmitting(false);
         toast.error("some thing went wrong!");
         setEditMode(false);
@@ -133,15 +131,15 @@ const AccountDetails = memo(function AccountDetails() {
       });
   };
   if (loading || (!data && !error)) {
-    return <SyncLoader color="rgb(190, 18, 60)" size={8} />;
+    return <Loader  />;
   }
   if (!user) {
     redirect("/login");
   }
-  console.log(data);
+ 
   if (data) {
     return (
-      <section className="my-6 w-full  text-white grid grid-cols-[minmax(auto,140px)_1fr] gap-6 items-center">
+      <section className="my-6 w-full  text-white grid grid-cols-[minmax(100px,190px)_1fr] gap-6 lg:items-center">
         {deleteModalShow && (
           <Modal handler={deleteAccHandler}>
             <p className="my-4 text-center">
@@ -163,7 +161,7 @@ const AccountDetails = memo(function AccountDetails() {
             priority
           />
         </div>
-        <div className="flex  gap-16 justify-between w-full  items-end">
+        <div className="flex flex-wrap  gap-16 justify-between w-full  items-end">
           <div className="flex flex-col gap-2  ">
             {editMode ? (
               <>

@@ -44,6 +44,8 @@ function Sidebar() {
   const menuRef = React.useRef<HTMLDivElement>(null);
   if (
     path.includes("login") ||
+    path.includes("reauth") ||
+    path.includes("forgot-password") ||
     path.includes("signup") ||
     path.includes("plans")
   ) {
@@ -53,7 +55,7 @@ function Sidebar() {
     return (
       <AiFillCaretRight
         size={30}
-        className="fixed  top-1/3   text-red  z-50 cursor-pointer"
+        className="fixed  top-1/3  z-[999]  text-red   cursor-pointer"
         onClick={() => {
           setIsOpen(true);
           document.body?.scrollIntoView({
@@ -68,7 +70,7 @@ function Sidebar() {
   return (
     <div
       ref={menuRef}
-      className="bg-darkest  flex flex-col items-center text-light-gray gap-6 pr-2  capitalize"
+      className="  h-auto flex flex-col items-center text-light-gray gap-6 pr-3 xl:pr-5 bg-darkest capitalize"
     >
       <Link prefetch={false} href={"/my-space"}>
         <h2 className="font-bold text-3xl text-white text-center my-6 hidden md:block">
@@ -250,12 +252,12 @@ function Sidebar() {
         )
       )}
       <span
-        className="my-3 cursor-pointer flex items-center self-start ml-5"
+        className="my-3 w-fit cursor-pointer flex items-center "
         onClick={() => setIsOpen(false)}
       >
         <AiFillCaretRight
           size={20}
-          className="  text-red/80  z-50  rotate-180"
+          className="  text-red/80  z-50  rotate-180 "
         />
         <span className="text-sm">Hide</span>
       </span>

@@ -13,6 +13,7 @@ interface Props {
 
 export default function MovieCard({ data, className }: Props) {
   let mediaUrl;
+
   switch (data.media_type) {
     case "episode":
       mediaUrl = `serieses/${data.seriesId}/season/${data.season_number}/episode/${data.episode_number}`;

@@ -21,7 +21,7 @@ export default Page;
 const ReauthenticateForm = memo(function Form() {
   const { user, loading } = useContext(AuthContext);
   if (user && !loading) {
-    console.log("here");
+
     return (
       <section className="h-screen   flex flex-col items-center justify-center p-5 max-w-7xl mx-auto ">
         <div className="w-4/6 max-w-7xl bg-darkest overflow-hidden  grid md:grid-cols-[1fr_2fr] rounded-2xl   border border-light-gray/50">

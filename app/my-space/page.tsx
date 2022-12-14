@@ -1,4 +1,5 @@
 import MovieCard from "../../components/cards/MovieCard";
+import ConintueWatching from "../../components/ConintueWatching";
 import Carousel from "../../components/layout/carousel";
 import { ListItem } from "../../util/getDataListing";
 export default async function Home() {
@@ -15,10 +16,11 @@ export default async function Home() {
     await trendingResponse.json();
 
   return (
-    <main className="text-white w-full flex flex-col my-16">
-      <Carousel title="Continue watching" />
+    <main className="text-white w-full flex flex-col  p-10">
+      <h2 className="font-bold text-3xl my-6 ">Continue Watching</h2>
+      <ConintueWatching />
 
-      <section className="h-full  text-white px-10 w-full  ">
+      <section className="h-full  text-white  w-full  ">
         <h2 className="font-bold text-3xl my-6 ">Trending</h2>
         <div className="grid  md:grid-cols-3 lg:grid-cols-4  3xl:grid-cols-5 gap-4 ">
           {trending.map((item: any) => (

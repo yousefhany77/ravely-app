@@ -12,10 +12,14 @@ import {
 } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
-import { useRouter } from "next/navigation";
-import React, { createContext, memo, useEffect, useState } from "react";
+import React, {
+  createContext,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
-import { Subscription } from "../app/(user)/account/types";
 import { db, FirebaseApp } from "../firebase/firebase-init";
 
 interface AuthContext {
@@ -57,7 +61,7 @@ export const AuthProvider = memo(function AuthProvider({
     const unsubscribe = auth.onAuthStateChanged(
       async (user) => {
         if (user) {
-          await user.reload()
+          await user.reload();
           setUser(user);
           setLoading(false);
         } else {
@@ -165,7 +169,7 @@ export const AuthProvider = memo(function AuthProvider({
             Authorization: `Bearer ${token.token}`,
           },
         });
-      return userData;
+        return userData;
       }
       throw "You must be subscribed to access Ravely";
     } catch (_error) {
@@ -178,7 +182,7 @@ export const AuthProvider = memo(function AuthProvider({
       );
     }
   };
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     await auth.signOut();
     await fetch("api/auth/logout", {
       method: "POST",
@@ -186,7 +190,7 @@ export const AuthProvider = memo(function AuthProvider({
         "Content-Type": "application/json",
       },
     });
-  };
+  }, [auth]);
   const resetPassword = async (email: string) => {
     return sendPasswordResetEmail(auth, email)
       .then(() => {
@@ -207,6 +211,7 @@ export const AuthProvider = memo(function AuthProvider({
           user,
           credential
         );
+        setUser(authedUser);
         const token = await authedUser.getIdToken(true);
         await fetch(`${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/auth/login`, {
           method: "POST",
@@ -225,6 +230,7 @@ export const AuthProvider = memo(function AuthProvider({
     try {
       const { user } = await reauthenticateWithPopup(userData, provider);
       const token = await user.getIdToken(true);
+      setUser(user);
       await fetch(`${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/auth/login`, {
         method: "POST",
         headers: {
@@ -238,20 +244,19 @@ export const AuthProvider = memo(function AuthProvider({
   };
   useEffect(() => {
     const refrech = setInterval(async () => {
-      if (auth.currentUser?.email) {
-        console.log("Refreching token");
-        const token = await auth.currentUser?.getIdToken(true);
-        await fetch(`${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/auth/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      }
-    }, 1000 * 60 * 50);
+      const token = await auth.currentUser?.getIdToken(true);
+
+      await fetch(`${process.env.NEXT_PUBLIC_APP_DOMAIN}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }, 1000 * 60 * 10);
 
     return () => {
+      console.log("UnMounted interval");
       clearInterval(refrech);
     };
   }, [auth.currentUser]);
