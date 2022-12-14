@@ -9,7 +9,7 @@ export default async function Handler(
   if (!range) {
     return res.status(400).send("Requires Range header");
   }
-  const videoPath = "public/video.mp4";
+  const videoPath = "/video.mp4";
   const videoSize = fs.statSync(videoPath).size;
   const CHUNK_SIZE = 10 ** 6; // 1MB
   const start = Number(range.replace(/\D/g, ""));
