@@ -62,7 +62,7 @@ function Page() {
           {party ? (
             <Suspense fallback={<LoadingPlayer />}>
               <div className="flex justify-between items-center px-3  w-full ">
-                <h1 className="capitalize text-3xl lg:text-5xl font-extrabold text-white shadow-lg ">
+                <h1 className="capitalize text-3xl lg:text-4xl w-fit font-extrabold text-white shadow-lg ">
                   {seriesDetails.title
                     ? `${seriesDetails.title} S-${season_number} E-${epNumber}`
                     : "No title"}

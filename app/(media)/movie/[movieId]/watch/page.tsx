@@ -48,7 +48,7 @@ function Page() {
           {party ? (
             <Suspense fallback={<LoadingPlayer />}>
               <div className="flex justify-between items-center px-3  w-full ">
-                <h1 className="capitalize text-3xl lg:text-5xl font-extrabold text-white shadow-lg ">
+                <h1 className="capitalize text-3xl lg:text-4xl font-extrabold text-white shadow-lg w-fit">
                   {movieDetails.title ? movieDetails.title : "No title"}
                 </h1>
 

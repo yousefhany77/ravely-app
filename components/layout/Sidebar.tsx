@@ -18,13 +18,12 @@ import Netflix from "../Icons/Netflix.svg";
 import AmazonPrime from "../Icons/AmazonPrime.svg";
 import HBO from "../Icons/HBO.svg";
 import Disney from "../Icons/Disney.svg";
-import { HiOutlineUserGroup, HiUserGroup } from "react-icons/hi";
+import { MdOutlinePriceChange, MdPriceChange } from "react-icons/md";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import Image from "next/image";
 import { AuthContext } from "../../context/authContext";
 import SignOutButton from "../auth/SignOut";
-import LoginButton from "../auth/LoginButton";
 
 function Sidebar() {
   const path = useSelectedLayoutSegments();
@@ -151,6 +150,22 @@ function Sidebar() {
             <AiFillHeart className="ml-5 " size={22} />
           ) : (
             <AiOutlineHeart className="ml-5 text-light-gray " size={22} />
+          )}
+
+          <span className="hidden md:block">Watchlist</span>
+        </Link>
+        <Link
+          prefetch={false}
+          href={"/plans"}
+          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${
+            active === 4 ? "active" : "border-transparent"
+          } `}
+          onClick={() => setActive(4)}
+        >
+          {active === 4 ? (
+            <MdPriceChange className="ml-5 " size={22} />
+          ) : (
+            <MdOutlinePriceChange className="ml-5 text-light-gray " size={22} />
           )}
 
           <span className="hidden md:block">Watchlist</span>
