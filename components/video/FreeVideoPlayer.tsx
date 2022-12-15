@@ -26,7 +26,7 @@ function FreeVideoPlayer({
             : getImageUrl(fallbackPoster, "original")
         }
         className="w-full rounded-xl"
-        src={"/video.mp4"}
+        src={videoSrc}
         controls={true}
       >
         Your browser does not support the video tag.

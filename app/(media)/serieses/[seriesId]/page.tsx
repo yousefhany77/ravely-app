@@ -9,6 +9,7 @@ import Slider from "../../../../components/layout/Slider";
 import VideoSlider from "../../movie/[movieId]/VideoSlider";
 import Head from "./head";
 import getSeries from "../../../../util/getSeries";
+import { getImageUrl } from "../../../../util/getImageUrl";
 interface Props {
   params: { seriesId: string };
 }
@@ -32,7 +33,11 @@ async function page({ params: { seriesId } }: Props) {
             <p>• Seasons: {seriesDetails.number_of_seasons} </p>
           </div>
 
-          <UserFavorite mediaId={seriesId} />
+          <UserFavorite
+            mediaId={`s-${seriesDetails.id}`}
+            posterLink={getImageUrl(seriesDetails.poseter_path, "original")}
+            title={seriesDetails.title}
+          />
         </Hero>
         <section className="p-5 w-full lg:w-10/12 aspect-video mx-auto">
           <h2 className="text-4xl font-bold my-6">Trailers</h2>

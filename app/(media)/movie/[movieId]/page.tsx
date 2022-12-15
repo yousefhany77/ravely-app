@@ -6,10 +6,11 @@ import Slider from "../../../../components/layout/Slider";
 import CharacterCard from "../../../../components/cards/CharacterCard";
 import MovieCard from "../../../../components/cards/MovieCard";
 import { notFound } from "next/navigation";
-import { FavoriteButton } from "../../../../components/Favorite";
+import UserFavorite from "../../../../components/Favorite";
 import Link from "next/link";
 import Hero from "../../../../components/media-page/Hero";
 import getMovie from "../../../../util/getMovie";
+import { getImageUrl } from "../../../../util/getImageUrl";
 interface Props {
   params: { movieId: string };
 }
@@ -39,7 +40,12 @@ async function page({ params: { movieId } }: Props) {
             >
               Watch Now
             </Link>
-            <FavoriteButton mediaId={`m-${movieDetails.id}`} />
+            <UserFavorite
+              mediaId={`m-${movieDetails.id}`}
+              posterLink={getImageUrl(movieDetails.poseter_path, "original")}
+              title={movieDetails.title}
+
+            />
           </div>
         </Hero>
 

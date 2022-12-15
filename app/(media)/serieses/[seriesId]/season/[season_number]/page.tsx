@@ -29,7 +29,7 @@ export async function generateStaticParams() {
 async function page({ params: { seriesId, season_number } }: Props) {
   const seasonDetails = await getSeasonData(seriesId, season_number);
   const seriesDetails = await getSeries(seriesId);
-  if (seriesDetails ===  null) notFound();
+  if (seriesDetails === null) notFound();
 
   const tabTitle = seriesDetails.title;
   const rating = seriesDetails.vote_average;
@@ -53,7 +53,11 @@ async function page({ params: { seriesId, season_number } }: Props) {
           </p>
           <p>• Episodes: {seasonDetails.episodes?.length || "unknown"} </p>
 
-          <FavoriteButton mediaId={`s-${seriesId}-${season_number}`} />
+          <FavoriteButton
+            mediaId={`s-${seriesId}-${season_number}`}
+            posterLink={seasonDetails.poster_path}
+            title={`${tabTitle} | season ${season_number}`}
+          />
         </Hero>
         <section className="w-[80vw] mx-auto p-5">
           <h2 className="text-3xl font-bold my-6">Episodes</h2>

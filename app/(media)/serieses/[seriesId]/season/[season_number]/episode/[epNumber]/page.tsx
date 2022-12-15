@@ -24,6 +24,7 @@ import Head from "../../../../../../movie/head";
 import Slider from "../../../../../../../../components/layout/Slider";
 import getSeries from "../../../../../../../../util/getSeries";
 import copyToClipboard from "../../../../../../../../util/CopyToClipboard";
+import { createParty, joinParty } from "../../../../../../../../util/party";
 const PremiumVideoPlayer = lazy(
   () => import("../../../../../../../../components/video/PremiumVideoPlayer")
 );
@@ -80,7 +81,7 @@ function Page() {
               <PremiumVideoPlayer
                 mediaType="mp4"
                 room={party}
-                src="/api/video"
+                src={process.env.NEXT_PUBLIC_API_DOMAIN + "/video"}
                 username={user.displayName}
                 className="w-full rounded-xl"
                 poster={
@@ -96,7 +97,7 @@ function Page() {
                 title={`${seriesDetails.title} S-${season_number} E-${epNumber}`}
                 poster={seriesDetails.backdrop_path}
                 fallbackPoster={seriesDetails.poseter_path}
-                videoSrc="/api/video"
+                videoSrc={process.env.NEXT_PUBLIC_API_DOMAIN + "/video"}
               />
               {userRole !== "basic" && (
                 <div className="w-full flex items-center justify-between flex-wrap">
@@ -108,7 +109,7 @@ function Page() {
                       className="bg-light-gray/25 w-full md:w-auto  rounded py-1 border-none outline-none focus:outline-red/25 px-2 "
                     />
                     <button
-                      disabled={input.length !== 10}
+                      
                       onClick={() => joinParty(user, setParty, input)}
                       className=" w-full md:w-auto  px-5 py-2 bg-white text-black   rounded-lg cursor-pointer shadow-lg transition-colors ease-in-out duration-150 hover:bg-red hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                     >
@@ -150,58 +151,3 @@ function Page() {
 }
 
 export default Page;
-
-const createParty = (
-  user: User,
-  setParty: Dispatch<SetStateAction<string>>
-) => {
-  // @check if user is premium
-  if (!user) return;
-  getUserRole(user).then((role) => {
-    if (role !== "basic") {
-      // @create party
-      //  if premium create party
-      //   => mount premium video player
-      const roomid = nanoid(10);
-      setParty(roomid);
-      return;
-    } else {
-      // @prompt to upgrade
-      //  if not premium prompt to upgrade or use free video player
-      //   => mount free video player || => redirect to upgrade page
-      alert("You need to be premium to create a party");
-      window.location.href = "/plans";
-    }
-  });
-
-  return null;
-};
-
-const joinParty = (
-  user: User,
-  setParty: Dispatch<SetStateAction<any>>,
-  room: string
-) => {
-  // @check if user is premium
-  if (!user) return;
-  if (!room || room.length < 10) {
-    return alert("Invalid party id");
-  }
-  getUserRole(user).then((role) => {
-    if (role !== "basic") {
-      // @create party
-      //  if premium create party
-      //   => mount premium video player
-      setParty(room);
-      return;
-    } else {
-      // @prompt to upgrade
-      //  if not premium prompt to upgrade or use free video player
-      //   => mount free video player || => redirect to upgrade page
-      alert("You need to be premium to create a party");
-      window.location.href = "/plans";
-    }
-  });
-
-  return null;
-};

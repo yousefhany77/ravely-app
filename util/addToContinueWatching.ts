@@ -1,4 +1,10 @@
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db, FirebaseApp } from "../firebase/firebase-init";
 const addToContinueWatching = async (
@@ -14,13 +20,19 @@ const addToContinueWatching = async (
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       // update the data
-      console.log("Document data:", docSnap.data());
+
       await updateDoc(docRef, {
-        [id]: mediaData,
+        [id]: {
+          ...mediaData,
+          lastWatched: serverTimestamp(),
+        },
       });
     } else {
       await setDoc(docRef, {
-        [id]: mediaData,
+        [id]: {
+          ...mediaData,
+          lastWatched: serverTimestamp(),
+        },
       });
     }
     // add the data

@@ -70,7 +70,7 @@ function Sidebar() {
   return (
     <div
       ref={menuRef}
-      className="  h-auto flex flex-col items-center text-light-gray gap-6 pr-3 xl:pr-5 bg-darkest capitalize"
+      className=" min-h-screen  h-auto flex flex-col items-center text-light-gray gap-6 pr-3 xl:pr-5 bg-darkest capitalize"
     >
       <Link prefetch={false} href={"/my-space"}>
         <h2 className="font-bold text-3xl text-white text-center my-6 hidden md:block">

@@ -5,8 +5,7 @@ const useSocket = (): { socket: Socket | null; loading: boolean } => {
   const [socket, setSocket] = useState<Socket | null>(null);
   useEffect(() => {
     (async () => {
-      await fetch("/api/socket/video");
-      const socket = io(window?.location?.host, {
+      const socket = io(process.env.NEXT_PUBLIC_API_DOMAIN!, {
         reconnectionDelay: 1000,
         reconnection: true,
         reconnectionAttempts: 10,
@@ -16,7 +15,7 @@ const useSocket = (): { socket: Socket | null; loading: boolean } => {
     console.log(socket);
     return () => {
       console.log("disconnect");
-      socket?.disconnect();
+      socket?.close();
       socket?.removeAllListeners();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

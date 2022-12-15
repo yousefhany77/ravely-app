@@ -19,7 +19,6 @@ export default async function handler(
     }
   }
   const uid = parseJwt(req.body);
-  console.log(uid);
   try {
     const user = await adminAuth.verifyIdToken(req.body);
     if (!user.email_verified) {
