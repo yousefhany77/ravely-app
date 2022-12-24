@@ -28,7 +28,7 @@ function Audio({ partyId }: { partyId: string }) {
   }, [partyId]);
   if (!members) return null;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 p-6 bg-slate-800 w-5/6 h-full rounded-xl">
+    <div className="flex items-center justify-center gap-4 p-6 bg-slate-800 w-5/6 h-full rounded-xl">
       {Object.values(members).map((member) => {
         return (
           <div
@@ -36,7 +36,7 @@ function Audio({ partyId }: { partyId: string }) {
             className="flex flex-col gap-2 items-center justify-center w-full h-full"
           >
             <div
-              className={`aspect-square bg-white ${
+              className={`aspect-square bg-white w-[130px] ${
                 member.uid === memberSpeaking
                   ? "border-red shadow-md"
                   : "border-transparent"

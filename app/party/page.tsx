@@ -119,7 +119,7 @@ function PartyPage() {
               </Suspense>
 
               {/* users in the audio chat */}
-              <div className="flex items-center justify-between gap-4 flex-wrap my-4">
+              <div className="flex flex-col items-center justify-center lg:justify-between gap-4 lg:flex-row my-4">
                 <h2 className="font-bold text-xl lg:text-2xl">
                   {party.partyName}
                 </h2>
