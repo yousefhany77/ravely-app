@@ -51,6 +51,7 @@ function Header() {
     path.includes("reauth") ||
     path.includes("forgot-password") ||
     path.includes("signup") ||
+    path.length === 0 ||
     path.includes("plans")
   ) {
     return null;

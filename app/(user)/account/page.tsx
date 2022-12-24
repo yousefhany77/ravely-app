@@ -26,23 +26,23 @@ const viewMyPlan = async () => {
 };
 function Page() {
   return (
-      <main className="h-full p-4  w-full max-w-7xl mx-auto py-5 flex flex-col items-center justify-evenly">
-        {/* Account Details */}
-        <AuthProvider>
-          <div className="w-full">
-            <h2 className="self-start text-white text-2xl font-extrabold">
-              Account Details
-            </h2>
-            <AccountDetails />
-          </div>
-          <div className="w-full">
-            <h2 className="self-start text-white text-2xl font-extrabold">
-              Invoices
-            </h2>
-            <Invoice />
-          </div>
-        </AuthProvider>
-      </main>
+    <main className="h-full p-4  w-full max-w-7xl mx-auto py-5 flex flex-col items-center justify-evenly">
+      {/* Account Details */}
+      <AuthProvider>
+        <div className="w-full">
+          <h2 className="self-start text-white text-2xl font-extrabold">
+            Account Details
+          </h2>
+          <AccountDetails />
+        </div>
+        <div className="w-full">
+          <h2 className="self-start text-white text-2xl font-extrabold">
+            Invoices
+          </h2>
+          <Invoice />
+        </div>
+      </AuthProvider>
+    </main>
   );
 }
 
@@ -53,7 +53,6 @@ const AccountDetails = memo(function AccountDetails() {
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const { user, loading } = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
-
 
   const { data, error } = useSWR(
     user !== null ? user.uid : null,
@@ -105,7 +104,6 @@ const AccountDetails = memo(function AccountDetails() {
           setSubmitting(false);
         }
       } catch (error) {
-    
         setSubmitting(false);
         toast.error("some thing went wrong!");
         setEditMode(false);
@@ -131,12 +129,12 @@ const AccountDetails = memo(function AccountDetails() {
       });
   };
   if (loading || (!data && !error)) {
-    return <Loader  />;
+    return <Loader />;
   }
   if (!user) {
     redirect("/login");
   }
- 
+
   if (data) {
     return (
       <section className="my-6 w-full  text-white grid grid-cols-[minmax(100px,190px)_1fr] gap-6 lg:items-center">
@@ -321,5 +319,5 @@ const Invoice = () => {
     );
   }
 
-  return <SyncLoader color="rgb(190, 18, 60)" size={6} />;
+  return null;
 };

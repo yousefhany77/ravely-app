@@ -2,7 +2,6 @@
 import React, { memo, useContext } from "react";
 import { BsCompass, BsCompassFill } from "react-icons/bs";
 import Logo from "../../public/logo.png";
-import { MdMonitor } from "react-icons/md";
 import {
   AiFillHome,
   AiOutlineHome,
@@ -14,10 +13,6 @@ import {
   AiOutlineSetting,
   AiFillCaretRight,
 } from "react-icons/ai";
-import Netflix from "../Icons/Netflix.svg";
-import AmazonPrime from "../Icons/AmazonPrime.svg";
-import HBO from "../Icons/HBO.svg";
-import Disney from "../Icons/Disney.svg";
 import { MdOutlinePriceChange, MdPriceChange } from "react-icons/md";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
@@ -33,37 +28,52 @@ function Sidebar() {
     if (path.length === 0) return 0;
     else if (path[0] === "explore") return 1;
     else if (path[0] === "upcoming") return 3;
-    else if (path[0] === "watchlist") return 2;
-    else if (path[0] === "party") return 4;
+    else if (path[0] === "favourite") return 2;
+    else if (path[0] === "plans") return 4;
     else if (path[0] === "Account") return 5;
     else return undefined;
   });
   const [isOpen, setIsOpen] = React.useState(true);
-  const [showProviders, setShowProviders] = React.useState(false);
   const menuRef = React.useRef<HTMLDivElement>(null);
   if (
     path.includes("login") ||
     path.includes("reauth") ||
     path.includes("forgot-password") ||
     path.includes("signup") ||
-    path.includes("plans")
+    path.length === 0
   ) {
     return null;
   }
   if (!isOpen) {
     return (
-      <AiFillCaretRight
-        size={30}
-        className="fixed  top-1/3  z-[999]  text-red   cursor-pointer"
-        onClick={() => {
-          setIsOpen(true);
-          document.body?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-            inline: "start",
-          });
-        }}
-      />
+      <>
+        <Link
+          prefetch={false}
+          href={"/my-space"}
+          className=" absolute top-2 left-2 z-[999]"
+        >
+          <h2 className="font-bold text-3xl text-white text-center my-2 hidden md:block">
+            Ravely<span className="text-red">.</span>
+          </h2>
+          <Image
+            src={Logo}
+            alt="Ravly Logo"
+            className="rounded-md w-10 md:hidden m-2 "
+          />
+        </Link>
+        <AiFillCaretRight
+          size={30}
+          className="fixed  top-1/3  z-[999]  text-red   cursor-pointer"
+          onClick={() => {
+            setIsOpen(true);
+            document.body?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+              inline: "start",
+            });
+          }}
+        />
+      </>
     );
   }
   return (
@@ -78,7 +88,7 @@ function Sidebar() {
         <Image
           src={Logo}
           alt="Ravly Logo"
-          className="rounded-md w-14 md:hidden my-6 "
+          className="rounded-md w-12 md:hidden my-6 "
         />
       </Link>
       {/* Menu */}
@@ -137,10 +147,10 @@ function Sidebar() {
             upcoming
           </span>
         </Link>
-        {/* Watchlist */}
+        {/* favourite */}
         <Link
           prefetch={false}
-          href={"/watchlist"}
+          href={"/favourite"}
           className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${
             active === 2 ? "active" : "border-transparent"
           } `}
@@ -152,7 +162,7 @@ function Sidebar() {
             <AiOutlineHeart className="ml-5 text-light-gray " size={22} />
           )}
 
-          <span className="hidden md:block">Watchlist</span>
+          <span className="hidden md:block">Favourite</span>
         </Link>
         <Link
           prefetch={false}
@@ -168,58 +178,8 @@ function Sidebar() {
             <MdOutlinePriceChange className="ml-5 text-light-gray " size={22} />
           )}
 
-          <span className="hidden md:block">Watchlist</span>
+          <span className="hidden md:block">Plans</span>
         </Link>
-
-        <button
-          className={`w-full border-l-4 flex  gap-4 items-center  hover:border-light-gray/40 transition-all ease ${
-            active === 7 ? "active" : "border-transparent"
-          } `}
-          onClick={() => {
-            setActive(7);
-            setShowProviders(!showProviders);
-          }}
-        >
-          <MdMonitor className="ml-5 " size={22} />
-
-          <span className="hidden md:block ">Networks</span>
-        </button>
-        {showProviders && (
-          <div className=" absolute z-50 bg-gray-800 shadow flex   rounded-xl  gap-3   px-3 justify-center items-center bottom-0 left-full translate-x-9 translate-y-3 ">
-            <Link
-              className="hover:scale-125 hover:mx-2 transition-all ease-in-out duration-150"
-              prefetch={false}
-              href={"/explore/serieses?&network=Netflix"}
-              onClick={() => setShowProviders(false)}
-            >
-              <Netflix width={55} />
-            </Link>
-            <Link
-              className="hover:scale-125 hover:mx-2 transition-all ease-in-out duration-150"
-              prefetch={false}
-              href={"/explore/serieses?network=Amazon Prime"}
-              onClick={() => setShowProviders(false)}
-            >
-              <AmazonPrime width={55} />
-            </Link>
-            <Link
-              className="hover:scale-125 hover:mx-2 transition-all ease-in-out duration-150"
-              prefetch={false}
-              href={"/explore/serieses?network=HBO"}
-              onClick={() => setShowProviders(false)}
-            >
-              <HBO width={55} />
-            </Link>
-            <Link
-              className="hover:scale-125 hover:mx-2 transition-all ease-in-out duration-150"
-              prefetch={false}
-              href={"/explore/serieses?network=Disney"}
-              onClick={() => setShowProviders(false)}
-            >
-              <Disney width={55} />
-            </Link>
-          </div>
-        )}
       </section>
       {/* General */}
       {user ? (

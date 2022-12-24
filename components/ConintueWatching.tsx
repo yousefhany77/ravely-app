@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { AuthProvider } from "../context/authContext";
 import useGetContinueWatching from "../hooks/useGetContinueWatching";
 import { ContinueWatching } from "../util/addToContinueWatching";
@@ -12,7 +11,7 @@ const ConintueWatchingComponent = () => {
   const [continueWatching, isLoading, error] = useGetContinueWatching();
 
   let continueWatchingCards: JSX.Element[] = [];
-  if(error) return <h1 className="text-white text-2xl">Error</h1>
+  if (error) return <h1 className="text-white text-2xl">Error</h1>;
   if (continueWatching) {
     for (const [key, value] of Object.entries(continueWatching)) {
       if (key.startsWith("m")) {
@@ -44,12 +43,13 @@ const ConintueWatchingComponent = () => {
       }
     }
     return (
-      <div className="max-w-[120rem] mx-auto shadow-lg bg-darkest rounded-2xl p-4   w-full h-full">
-        <Slider className=" min-w-[66%]  ">{continueWatchingCards}</Slider>
+      <div className="max-w-[120rem] mx-auto shadow-lg bg-darkest rounded-2xl p-2 lg:p-4   w-full h-full">
+        {/* <h2 className="font-bold text-3xl my-6 ">Continue Watching</h2> */}
+        <Slider className=" min-w-full lg:min-w-[66%] min-h-[70%]  ">{continueWatchingCards}</Slider>
       </div>
     );
   }
-  if (isLoading || !continueWatching) return <ContinueWatchingSkeleton />;
+  if (isLoading) return <ContinueWatchingSkeleton />;
   else return null;
 };
 const continueWatching = () => {

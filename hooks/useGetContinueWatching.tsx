@@ -7,7 +7,6 @@ import { ContinueWatching } from "../util/addToContinueWatching";
 
 function useGetContinueWatching() {
   const { user } = useContext(AuthContext);
-  console.log(user);
   const { data: continueWatching ,isLoading ,error} = useSWR(
     user?.uid ? "continueWatching" : null,
     async () => {

@@ -162,7 +162,7 @@ function LoginForm() {
           <hr className=" w-fit flex-grow bg-white/30" />
         </div>
 
-        <div className="flex   justify-between min-w-full">
+        <div className="flex flex-col gap-3 lg:flex-row items-center  justify-between min-w-full">
           <Link
             className="text-black font-semibold hover:underline"
             href={"/forgot-password"}

@@ -15,7 +15,7 @@ function FreeVideoPlayer({
   return (
     <>
       <div className="flex justify-between items-center px-3  w-full ">
-        <h1 className="capitalize text-2xl md:text-3xl lg:text-5xl  font-extrabold text-white shadow-lg ">
+        <h1 className="capitalize text-xl lg:text-3xl font-extrabold text-white shadow-lg w-fit ">
           {title ? title : "No title"}
         </h1>
       </div>

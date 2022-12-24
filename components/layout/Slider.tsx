@@ -60,8 +60,10 @@ function Slider({ children, className }: Props) {
             left: -last,
           }}
           className={` flex ${
-            children.length <= 2 ? "justify-center" : "justify-start"
-          }   ${children.length <= 3 ? "items-center  px-4  " : null} `}
+            children.length < 2
+              ? "justify-center  "
+              : "justify-start"
+          }    items-center px-2 lg:px-4`}
         >
           {children.map((child, i) => (
             <motion.div

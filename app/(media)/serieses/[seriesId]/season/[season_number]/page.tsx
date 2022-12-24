@@ -6,6 +6,7 @@ import Hero from "../../../../../../components/media-page/Hero";
 import Slider from "../../../../../../components/layout/Slider";
 import Head from "../../head";
 import getSeries, { SeriesPage } from "../../../../../../util/getSeries";
+import { getImageUrl } from "../../../../../../util/getImageUrl";
 const getSeasonData = async (
   id: number,
   season_number: number
@@ -55,7 +56,7 @@ async function page({ params: { seriesId, season_number } }: Props) {
 
           <FavoriteButton
             mediaId={`s-${seriesId}-${season_number}`}
-            posterLink={seasonDetails.poster_path}
+            posterLink={getImageUrl(seasonDetails.poster_path, "original")}
             title={`${tabTitle} | season ${season_number}`}
           />
         </Hero>

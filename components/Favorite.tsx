@@ -64,7 +64,7 @@ export const useUserFavorite = (mediaId: string, uid: string) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const hasValue = !!docSnap.get(mediaId); // true or undefined
-      //   if the value is true then delete from the watchlist
+      //   if the value is true then delete from the FavouriteList
       if (hasValue) {
         await updateDoc(docRef, {
           [mediaId]: deleteField(),

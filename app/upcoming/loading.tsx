@@ -14,7 +14,7 @@ function loading() {
             key={item}
             className=" border-light-gray rounded-3xl cardAspect w-full bg-gray-700 flex flex-col overflow-hidden"
           >
-            <div className="bg-red h-3/4 rounded-3xl" />
+            <div className="bg-slate-700 h-3/4 rounded-3xl" />
             <button
               className="  font-bold flex flex-col w-full items-center justify-center  gap-2 py-3  p-2 min-h-[4rem]
            

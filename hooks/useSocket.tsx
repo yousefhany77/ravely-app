@@ -12,9 +12,8 @@ const useSocket = (): { socket: Socket | null; loading: boolean } => {
       });
       setSocket(socket);
     })();
-    console.log(socket);
+
     return () => {
-      console.log("disconnect");
       socket?.close();
       socket?.removeAllListeners();
     };

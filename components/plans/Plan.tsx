@@ -1,7 +1,7 @@
 "use client";
 import { loadStripe } from "@stripe/stripe-js";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useContext, useState, startTransition } from "react";
 import { Plan as PlanDetails } from "../../app/plans/page";
 import { AuthContext } from "../../context/authContext";
 import { db } from "../../firebase/firebase-init";
@@ -19,7 +19,12 @@ function Plan({ planDetails }: Props) {
   const { user, loading: loadingUser } = useContext(AuthContext);
   const [userRole, setUserRole] = useState<stripeRole>(null);
   const { isCheckingout, setIsCheckingout } = useCheckout();
-  user && getUserRole(user).then((res) => setUserRole(res));
+  user &&
+    getUserRole(user).then((res) =>
+      startTransition(() => {
+        setUserRole(res);
+      })
+    );
   const checkout = async (priceId: string) => {
     if (!user && !loadingUser) {
       toast.error("Please login to continue", {

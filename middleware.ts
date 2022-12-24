@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest) {
       request.nextUrl.pathname.startsWith("/login") ||
       request.nextUrl.pathname.startsWith("/signup") ||
       request.nextUrl.pathname.startsWith("/forgot-password") ||
-      request.nextUrl.pathname === "/"
+      request.nextUrl.pathname === "/ffff"
     ) {
       console.log("redirecting to my space");
       return NextResponse.redirect(

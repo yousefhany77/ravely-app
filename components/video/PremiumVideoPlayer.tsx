@@ -4,7 +4,6 @@ import { Socket } from "socket.io-client";
 import useSocket from "../../hooks/useSocket";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingPlayer from "./LoadingPlayer";
-
 interface IVideoPlayer extends VideoHTMLAttributes<HTMLVideoElement> {
   room: string;
   src: string;
@@ -15,10 +14,7 @@ interface IVideoPlayer extends VideoHTMLAttributes<HTMLVideoElement> {
 
 const VideoPlayer = (props: IVideoPlayer) => {
   const { socket, loading } = useSocket();
-  if (loading)
-    return (
-      <LoadingPlayer/>
-    );
+  if (loading) return <LoadingPlayer />;
   return <Video socket={socket} {...props} />;
 };
 export default memo(VideoPlayer);
@@ -37,15 +33,16 @@ const Video = ({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    socket?.emit("join", room, (msg: string) => {
+    socket?.emit("join-room", room, username, (msg: string) => {
       toast.success(msg, {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
+        icon: false,
       });
     });
-  }, [room, socket]);
+  }, [room, socket, username]);
   // add event listener
   useEffect(() => {
     console.log("monted");
@@ -117,7 +114,7 @@ const Video = ({
   }, [socket]);
   return (
     <>
-      <ToastContainer  limit={3} hideProgressBar={true}/>
+      <ToastContainer limit={3} hideProgressBar={true} />
       <video
         ref={videoRef}
         controls

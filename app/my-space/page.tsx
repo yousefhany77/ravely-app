@@ -17,7 +17,7 @@ export default async function Home() {
 
   return (
     <main className="text-white w-full flex flex-col  p-10">
-      <h2 className="font-bold text-3xl my-6 ">Continue Watching</h2>
+     
       <ConintueWatching />
 
       <section className="h-full  text-white  w-full  ">

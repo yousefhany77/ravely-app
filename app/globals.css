@@ -1,4 +1,30 @@
+:root {
+  --primary: rgb(16, 16, 16);
+  --secondary: rgb(168, 28, 58);
+}
+
 @tailwind base;
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 14px;
+  border: 3px solid var(--primary);
+}
 @tailwind components;
 @tailwind utilities;
 
@@ -94,8 +120,7 @@ h6 {
 .form-shadow {
   box-shadow: -1px 0px 1px rgba(32, 32, 32, 0.1),
     -2px 0px 2px rgba(32, 32, 32, 1), 4px 0px 4px rgba(32, 32, 32, 0.1),
-    -8px 0px 8px rgba(32, 32, 32, 0.1),
-    -18px 0px 18px rgb(32, 32, 32, 0.1);
+    -8px 0px 8px rgba(32, 32, 32, 0.1), -18px 0px 18px rgb(32, 32, 32, 0.1);
 }
 @keyframes active {
   0% {
@@ -116,4 +141,44 @@ h6 {
 .slideActive {
   transform: scale(1.03);
   border: 2px solid salmon;
+}
+
+.writing-animation {
+  animation: writing 5s ease-in-out infinite;
+  overflow: hidden;
+}
+.videoPlayer-Animation {
+  animation: videoPlayer 10s ease-in-out infinite;
+}
+@keyframes videoPlayer {
+  0% {
+    width: 0%;
+  }
+  10% {
+    width: 30%;
+  }
+  50% {
+    width: 50%;
+  }
+  70% {
+    width: 20%;
+  }
+  85% {
+    width: 60%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes writing {
+  0% {
+    width: 0ch;
+  }
+  50% {
+    width: 50%;
+  }
+  100% {
+    width: 100%;
+  }
 }
