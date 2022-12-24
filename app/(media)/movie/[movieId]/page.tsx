@@ -44,7 +44,6 @@ async function page({ params: { movieId } }: Props) {
               mediaId={`m-${movieDetails.id}`}
               posterLink={getImageUrl(movieDetails.poseter_path, "original")}
               title={movieDetails.title}
-
             />
           </div>
         </Hero>

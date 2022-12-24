@@ -93,7 +93,7 @@ function Plan({ planDetails }: Props) {
       
       ${
         planDetails.role === userRole
-          ? "bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-rose-700 to-pink-600 p-1 pb-0 scale-110 transition-transform ease-in-out duration-200 hover:scale-105"
+          ? "bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-rose-700 to-pink-600 p-1 pb-0 md:scale-110 transition-transform ease-in-out duration-200 hover:scale-105"
           : "bg-gradient-to-b from-gray-400 to-light-gray p-1 pb-0 transition-transform ease-in-out duration-200 hover:scale-95 group  hover:bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] hover:from-rose-700 hover:to-pink-600"
       } flex-1 rounded-t-xl overflow-hidden
       `}

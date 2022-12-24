@@ -137,7 +137,7 @@ const AccountDetails = memo(function AccountDetails() {
 
   if (data) {
     return (
-      <section className="my-6 w-full  text-white grid grid-cols-[minmax(100px,190px)_1fr] gap-6 lg:items-center">
+      <section className="my-6 w-full  text-white grid lg:grid-cols-[minmax(100px,190px)_1fr] gap-6 lg:items-center">
         {deleteModalShow && (
           <Modal handler={deleteAccHandler}>
             <p className="my-4 text-center">
@@ -147,7 +147,7 @@ const AccountDetails = memo(function AccountDetails() {
             </p>
           </Modal>
         )}
-        <div className="relative overflow-hidden rounded-full w-full aspect-square border-red border-4">
+        <div className="relative overflow-hidden rounded-full w-2/3 mx-auto lg:mx-0 lg:w-full aspect-square border-red border-4">
           <Image
             src={
               user.photoURL?.replace("s96", "s256") ||
@@ -229,12 +229,12 @@ const AccountDetails = memo(function AccountDetails() {
               day: "numeric",
             })}
           />
-          <div className="flex flex-grow gap-3 justify-end p-2 self-start justify-self-end">
+          <div className="flex flex-grow gap-3 justify-end p-2 self-start justify-self-end flex-wrap lg:flex-nowrap">
             {!editMode ? (
               <button
                 disabled={isSubmitting}
                 onClick={() => setEditMode(true)}
-                className="px-4 py-2 rounded-lg bg-white text-red transition-colors duration-200 ease-in-out hover:bg-slate-400"
+                className="px-4 py-2 rounded-lg bg-white text-red transition-colors duration-200 ease-in-out hover:bg-slate-400 w-full lg:w-fit"
               >
                 {isSubmitting ? (
                   <SyncLoader color="rgb(190, 18, 60)" size={6} />
@@ -246,7 +246,7 @@ const AccountDetails = memo(function AccountDetails() {
               <>
                 <button
                   disabled={isSubmitting}
-                  className="px-4 py-2 rounded-lg bg-white text-red transition-colors duration-200 ease-in-out hover:bg-slate-400"
+                  className="px-4 py-2 rounded-lg bg-white text-red transition-colors duration-200 ease-in-out hover:bg-slate-400 w-full lg:w-fit"
                   onClick={() => handleSubmit()}
                 >
                   {isSubmitting ? (
@@ -261,7 +261,7 @@ const AccountDetails = memo(function AccountDetails() {
                     setSubmitting(true);
                     viewMyPlan();
                   }}
-                  className="px-4 py-2 rounded-lg bg-white text-red transition-colors duration-200 ease-in-out hover:bg-slate-400"
+                  className="px-4 py-2 rounded-lg bg-white text-red transition-colors duration-200 ease-in-out hover:bg-slate-400 w-full lg:w-fit"
                 >
                   {isSubmitting ? (
                     <SyncLoader color="rgb(190, 18, 60)" size={6} />
@@ -273,7 +273,7 @@ const AccountDetails = memo(function AccountDetails() {
             )}
             <button
               onClick={promptDeleteModal}
-              className="px-4 py-2 rounded-lg bg-red text-white"
+              className="px-4 py-2 rounded-lg bg-red text-white w-full lg:w-fit"
             >
               Delete Account
             </button>
@@ -308,7 +308,7 @@ const Invoice = () => {
       <button
         disabled={isSubmitting}
         onClick={invoiceHandler}
-        className="px-4 py-2 rounded-lg bg-white text-red transition-colors duration-200 ease-in-out hover:bg-slate-400 m-6"
+        className="px-4 py-2 rounded-lg bg-white text-red transition-colors duration-200 ease-in-out hover:bg-slate-400 my-6  w-full lg:w-fit"
       >
         {isSubmitting ? (
           <SyncLoader color="rgb(190, 18, 60)" size={6} />

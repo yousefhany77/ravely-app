@@ -27,11 +27,12 @@ function LoginForm() {
         const user = await login(email, password);
 
         if (user) {
-          toast.success("Loged In successfully" ,{
+          toast.success("Loged In successfully", {
             autoClose: 1000,
           });
           resetForm();
-          router.push("/my-space");
+          router.replace("/my-space")
+
         }
       } catch (error: any) {
         if (error === "You must be subscribed to access Ravely") {
@@ -40,13 +41,13 @@ function LoginForm() {
             closeOnClick: true,
             autoClose: 5000,
             onClose: () => {
-              router.push("/plans");
+              router.replace("/plans");
             },
             bodyStyle: {
               textTransform: "capitalize",
             },
           });
-          router.push("/plans");
+          router.replace("/plans");
         } else {
           toast.error(error.code || `${error}`, {
             hideProgressBar: true,
@@ -66,14 +67,13 @@ function LoginForm() {
       setErrors({});
       const user = await signInWithGoogle();
       if (user) {
-        toast.success("Loged In successfully",{
+        toast.success("Loged In successfully", {
           autoClose: 1000,
           onClose: () => {
-            // router.replace("/my-space")
-            router.push("/my-space");
+            router.replace("/my-space")
           }
         });
-       
+
       }
     } catch (error) {
       if (error === "You must be subscribed to access Ravely") {

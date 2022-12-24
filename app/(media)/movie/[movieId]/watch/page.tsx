@@ -31,7 +31,7 @@ function Page() {
   });
   const partyIdRef = useRef<HTMLInputElement>(null);
   const [userRole, setUserRole] = useState<stripeRole>("basic");
-  if (!movieDetails && !error ) return <LoadingPlayer />;
+  if (!movieDetails && !error) return <LoadingPlayer />;
   if (movieDetails && !error && user) {
     getUserRole(user).then((role) => {
       setUserRole(role);

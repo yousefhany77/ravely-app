@@ -45,7 +45,7 @@ function SignupForm() {
           });
           resetForm();
           await sendEmailVerification(user, {
-            url: "http://localhost:3000/login",
+            url: `${window.location.origin}/login`,
           });
           toast.info(
             "please complete the checkout process to complete your account reigstration"
@@ -53,14 +53,13 @@ function SignupForm() {
           toast.success("Email verification sent, check your inbox and spam", {
             autoClose: 5000,
           });
-          await signOut();
           const docRef = doc(db, "customers", user.uid);
           const colRef = collection(docRef, "checkout_sessions");
           toast.loading("Free plan checkout... ");
           const rec = await addDoc(colRef, {
             price: process.env.NEXT_PUBLIC_STRIPE_FREE_PLAN!,
             success_url: `${window.location.origin}/my-space`,
-            cancel_url: "http://localhost:3000/",
+            cancel_url: window.location.origin,
           });
 
           onSnapshot(rec, async (snap) => {
@@ -72,6 +71,7 @@ function SignupForm() {
               const stripe = await loadStripe(
                 process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
               );
+              await signOut();
 
               stripe?.redirectToCheckout({ sessionId: data!.sessionId });
             }

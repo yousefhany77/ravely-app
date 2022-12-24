@@ -28,9 +28,8 @@ const ConintueWatchingComponent = () => {
       } else if (key.startsWith("s")) {
         // /serieses/76479/season/2/episode/1
         // s-id-s1-e1
-        const mediaLink = `/serieses/${value.mediaId}/season/${
-          key.split("-")[2]
-        }/episode/${key.split("-")[3]}`;
+        const mediaLink = `/serieses/${value.mediaId}/season/${key.split("-")[2]
+          }/episode/${key.split("-")[3]}`;
         continueWatchingCards.unshift(
           <ConintueWatchingCard
             title={value.title}
@@ -45,7 +44,9 @@ const ConintueWatchingComponent = () => {
     return (
       <div className="max-w-[120rem] mx-auto shadow-lg bg-darkest rounded-2xl p-2 lg:p-4   w-full h-full">
         {/* <h2 className="font-bold text-3xl my-6 ">Continue Watching</h2> */}
-        <Slider className=" min-w-full lg:min-w-[66%] min-h-[70%]  ">{continueWatchingCards}</Slider>
+        <Slider className=" min-w-full lg:min-w-[66%] min-h-[100%]  ">
+          {continueWatchingCards}
+        </Slider>
       </div>
     );
   }
@@ -70,18 +71,23 @@ const ConintueWatchingCard = ({
   mediaLink,
 }: IContinueWatchingCard) => {
   return (
-    <Link href={mediaLink} className="w-full block relative aspect-video    ">
-      <div className="bg-gradient-to-b from-transparent via-transparent to-zinc-900 w-full h-full absolute z-50 " />
-      <Image
-        alt={title}
-        src={posterLink}
-        className="object-cover rounded-2xl  overflow-hidden bg-transparent border-2 border-red border-opacity-0 hover:border-opacity-100 transition-all duration-300 ease-in-out 
+    <Link href={mediaLink} className="w-full block  h-full   ">
+      <div className="relative aspect-square lg:aspect-video">
+        <div className="bg-gradient-to-b from-transparent via-transparent to-zinc-900 w-full h-full absolute z-50 " />
+        <Image
+          alt={title}
+          src={posterLink}
+          className="object-cover rounded-2xl  overflow-hidden bg-transparent border-2 border-red border-opacity-0 hover:border-opacity-100 transition-all duration-300 ease-in-out 
         cursor-pointer"
-        fill
-      />
-      <h1 className="text-center text-white w-full font-bold text-2xl lg:text-3xl absolute bottom-5 z-50">
-        {title}
-      </h1>
+          fill
+        />
+        <span className="text-center text-white w-full font-bold text-3xl hidden sm:block absolute  bottom-5 z-50">
+          {title}
+        </span>
+      </div>
+      <span className="text-center text-white w-full font-bold text-xl sm:hidden block mx-auto my-1.5 ">
+        {title.length > 16 ? title.slice(0, 16).concat("...") : title}
+      </span>
     </Link>
   );
 };

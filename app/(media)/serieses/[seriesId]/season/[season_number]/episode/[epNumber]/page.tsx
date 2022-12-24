@@ -18,12 +18,9 @@ import { IPartyDetails } from "../../../../../../../party/page";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
 export async function generateStaticParams() {
   return [{ seriesId: "76479", season_number: "1", epNumber: "1" }];
 }
-
 
 function Page() {
   const pathname = usePathname();
