@@ -4,7 +4,8 @@ import React from "react";
 import HeroSection from "../components/Home/Hero";
 import SoundWaves from "../components/Home/SoundWaves";
 import VideoFeature from "../components/Home/VideoFeature";
-
+import avatar1 from "../public/avatar.png"
+import avatar2 from "../public/avatar2.png"
 function page() {
   return (
     <main className="max-w-7xl w-full mx-auto text-justify flex flex-col items-center justify-center gap-10  min-h-screen px-6 pb-4 ">
@@ -31,14 +32,14 @@ function page() {
         <section className="flex  justify-between items-center gap-4 md:gap-2">
           <div className="flex   mx-auto  items-center gap-6">
             <div className="w-24 md:w-28 lg:w-32  aspect-square rounded-full shadow-md border-4   relative overflow-hidden  ">
-              <Image src="/avatar.png" fill alt="user-aduio chat profile 1" />
+              <Image src={avatar2} fill alt="user-aduio chat profile 1" />
             </div>
             <SoundWaves />
           </div>
           <div className="flex    mx-auto  items-center gap-6">
             <SoundWaves />
             <div className="w-24 md:w-28 lg:w-32 aspect-square rounded-full shadow-md border-4   relative overflow-hidden ">
-              <Image src="/avatar2.png" fill alt="user-aduio chat profile 2" />
+              <Image src={avatar1} fill alt="user-aduio chat profile 2" />
             </div>
           </div>
         </section>
