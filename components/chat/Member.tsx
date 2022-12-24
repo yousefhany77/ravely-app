@@ -33,7 +33,7 @@ function Audio({ partyId }: { partyId: string }) {
         return (
           <div
             key={member.uid}
-            className="flex flex-col gap-2 items-center justify-center w-full h-full"
+            className="flex flex-col gap-2 items-center justify-center w-fit h-full"
           >
             <div
               className={`aspect-square bg-white w-[130px] ${
