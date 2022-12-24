@@ -124,7 +124,7 @@ function PartyPage() {
                   {party.partyName}
                 </h2>
                 <p
-                  className="pl-4 pr-0 bg-slate-800 rounded-lg text-slate-400 flex items-center gap-3 cursor-pointer  hover:bg-slate-700"
+                  className=" bg-slate-800 rounded-lg text-slate-400 flex flex-col lg:flex-row p-2 items-center gap-3 cursor-pointer  hover:bg-slate-700 lg:pl-4 lg:pr-0"
                   onClick={() => copyToClipboard(partyId)}
                 >
                   <span>Party Id:</span>{" "}

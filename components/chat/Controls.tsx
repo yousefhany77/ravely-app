@@ -65,7 +65,7 @@ function Controls(props: Props) {
   // function to  mute speackers
 
   return (
-    <div className="  text-white flex items-end justify-center gap-4  w-full ">
+    <div className="  text-white flex items-end justify-center gap-4  w-full flex-wrap ">
       <button
         className={` ${
           microphone

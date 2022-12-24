@@ -9,10 +9,9 @@ import {
   AiFillHeart,
   AiFillCalendar,
   AiOutlineCalendar,
-  AiFillSetting,
-  AiOutlineSetting,
   AiFillCaretRight,
 } from "react-icons/ai";
+import { MdManageAccounts, MdOutlineManageAccounts } from "react-icons/md"
 import { MdOutlinePriceChange, MdPriceChange } from "react-icons/md";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
@@ -98,9 +97,8 @@ function Sidebar() {
         <Link
           prefetch={false}
           href={"/my-space"}
-          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${
-            active === 0 ? "active" : "border-transparent"
-          } `}
+          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${active === 0 ? "active" : "border-transparent"
+            } `}
           onClick={() => setActive(0)}
         >
           {active === 0 ? (
@@ -115,9 +113,8 @@ function Sidebar() {
         <Link
           prefetch={false}
           href={"/explore/movies"}
-          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
-            active === 1 ? "active" : "border-transparent"
-          } `}
+          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${active === 1 ? "active" : "border-transparent"
+            } `}
           onClick={() => setActive(1)}
         >
           {active === 1 ? (
@@ -132,9 +129,8 @@ function Sidebar() {
         <Link
           prefetch={false}
           href={"/upcoming"}
-          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
-            active === 3 ? "active" : "border-transparent"
-          } `}
+          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${active === 3 ? "active" : "border-transparent"
+            } `}
           onClick={() => setActive(3)}
         >
           {active === 3 ? (
@@ -151,9 +147,8 @@ function Sidebar() {
         <Link
           prefetch={false}
           href={"/favourite"}
-          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${
-            active === 2 ? "active" : "border-transparent"
-          } `}
+          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${active === 2 ? "active" : "border-transparent"
+            } `}
           onClick={() => setActive(2)}
         >
           {active === 2 ? (
@@ -167,9 +162,8 @@ function Sidebar() {
         <Link
           prefetch={false}
           href={"/plans"}
-          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${
-            active === 4 ? "active" : "border-transparent"
-          } `}
+          className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease  ${active === 4 ? "active" : "border-transparent"
+            } `}
           onClick={() => setActive(4)}
         >
           {active === 4 ? (
@@ -191,23 +185,21 @@ function Sidebar() {
           <Link
             prefetch={false}
             href={"/account"}
-            className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${
-              active === 5 ? "active" : "border-transparent"
-            } `}
+            className={`w-full border-l-4 flex gap-4 items-center hover:border-light-gray/40 transition-all ease ${active === 5 ? "active" : "border-transparent"
+              } `}
             onClick={() => setActive(5)}
           >
             {active === 5 ? (
-              <AiFillSetting className="ml-5 " size={22} />
+              <MdManageAccounts className="ml-5 " size={22} />
             ) : (
-              <AiOutlineSetting className="ml-5 text-light-gray " size={22} />
+              <MdOutlineManageAccounts className="ml-5 text-light-gray " size={22} />
             )}
 
             <span className="hidden md:block">Account</span>
           </Link>
           <SignOutButton
-            className={`w-full border-l-4 flex gap-4 items-center  hover:border-light-gray/40 transition-all ease ${
-              active === 6 ? "active" : "border-transparent"
-            } `}
+            className={`w-full border-l-4 flex gap-4 items-center  hover:border-light-gray/40 transition-all ease ${active === 6 ? "active" : "border-transparent"
+              } `}
             onClick={() => setActive(6)}
           />
         </section>

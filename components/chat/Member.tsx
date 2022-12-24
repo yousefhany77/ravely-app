@@ -28,7 +28,7 @@ function Audio({ partyId }: { partyId: string }) {
   }, [partyId]);
   if (!members) return null;
   return (
-    <div className="flex items-center justify-center gap-4 p-6 bg-slate-800 w-5/6 h-full rounded-xl">
+    <div className="flex items-center flex-wrap justify-center gap-4 p-6 bg-slate-800 w-5/6 h-full rounded-xl">
       {Object.values(members).map((member) => {
         return (
           <div
