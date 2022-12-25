@@ -41,10 +41,10 @@ export const AuthContext = createContext<AuthContext>({
   login: async (_email, _password) => Promise.resolve(undefined),
   signInWithGoogle: async () => Promise.resolve(undefined),
   signUp: (_email, _password) => Promise.resolve(undefined),
-  signOut: async () => {},
-  resetPassword: async (_email) => {},
-  reAuthUser: async (_email, _password) => {},
-  reAuthWithProvider: async (_email) => {},
+  signOut: async () => { },
+  resetPassword: async (_email) => { },
+  reAuthUser: async (_email, _password) => { },
+  reAuthWithProvider: async (_email) => { },
 });
 export const AuthProvider = memo(function AuthProvider({
   children,
@@ -102,7 +102,7 @@ export const AuthProvider = memo(function AuthProvider({
       const firebaseError = _error as rootFirebaseError;
       throw Error(
         firebaseError.code.replaceAll("auth/", " ").replaceAll("-", " ") ||
-          "Something went wrong"
+        "Something went wrong"
       );
     }
   };
@@ -190,6 +190,7 @@ export const AuthProvider = memo(function AuthProvider({
         "Content-Type": "application/json",
       },
     });
+    window.location.href = "/"
   }, [auth]);
   const resetPassword = async (email: string) => {
     return sendPasswordResetEmail(auth, email)

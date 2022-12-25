@@ -15,7 +15,7 @@ import Slider from "../../../../../../../../components/layout/Slider";
 import getSeries from "../../../../../../../../util/getSeries";
 import { createParty, joinParty } from "../../../../../../../../util/party";
 import { IPartyDetails } from "../../../../../../../party/page";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export async function generateStaticParams() {
@@ -67,7 +67,13 @@ function Page() {
           {!showPartyControls && (
             <button
               className="btn-primary px-4 py-2 rounded-md "
-              onClick={() => setShowPartyControls(true)}
+              onClick={() => {
+                if (userRole === "basic") {
+                  toast.error("You need a premium account to create or join a party")
+                } else {
+                  setShowPartyControls(true)
+                }
+              }}
             >
               Create or Join Party
             </button>

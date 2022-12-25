@@ -11,11 +11,10 @@ import Head from "../(media)/movie/head";
 import LoadingPlayer from "../../components/video/LoadingPlayer";
 import copyToClipboard from "../../util/CopyToClipboard";
 import Image from "next/image";
+import { toast } from "react-toastify";
 const PremiumVideoPlayer = lazy(
   () => import("../../components/video/PremiumVideoPlayer")
 );
-import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer } from "react-toastify";
 
 const getParty = async (partyId: string, user: User) => {
   // check if the party exists in firebase and if it does, return true
@@ -33,19 +32,9 @@ const getParty = async (partyId: string, user: User) => {
       } as IPartyDetails;
     }
     else {
-
-      toast.error("You need to be a premium user to join this party", {
-
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        onClose: () => {
-          window.location.href = "/plans";
-        },
-
-      });
+      throw new Error("You are not a premium user")
     }
+
   }
 
   // if not, return false
@@ -78,8 +67,21 @@ function PartyPage() {
       } else {
         setLoadingParty(false);
         setNotFound(true);
-        return <div>404</div>;
       }
+    }).catch((err) => {
+      if (err.message === "You are not a premium user") {
+        toast.error("You are not a premium user to use party features please upgrade your plan", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          onClose: () => {
+            window.location.href = "/plans"
+          }
+        })
+        return
+      }
+      toast.error("something went wrong")
     });
   }
   if (!partyId)

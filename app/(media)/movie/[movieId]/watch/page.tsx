@@ -15,7 +15,7 @@ import addToContinueWatching from "../../../../../util/addToContinueWatching";
 import { createParty, joinParty } from "../../../../../util/party";
 import { IPartyDetails } from "../../../../party/page";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 function Page() {
   const pathname = usePathname();
@@ -51,7 +51,14 @@ function Page() {
           {!showPartyControls && (
             <button
               className="btn-primary px-4 py-2 rounded-md "
-              onClick={() => setShowPartyControls(true)}
+              onClick={
+                () => {
+                if(userRole === "basic"){
+                  toast.error("You need a premium account to create or join a party")
+                }else{
+                  setShowPartyControls(true)
+                }
+               }}
             >
               Create or Join Party
             </button>
