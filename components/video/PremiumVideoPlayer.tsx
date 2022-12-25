@@ -125,7 +125,7 @@ const Video = ({
         className={className}
         {...rest}
       >
-        <source src={"/video.mp4"} type={`video/${mediaType || "mp4"}`} />
+        <source src={src} type={`video/${mediaType || "mp4"}`} />
       </video>
     </>
   );
