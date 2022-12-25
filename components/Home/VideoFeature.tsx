@@ -12,7 +12,7 @@ function VideoFeature({ text }: { text: string }) {
     <div className="w-full aspect-video rounded-lg overflow-hidden bg-gray-700 relative flex flex-col items-center justify-center">
       <div>
         {show && (
-          <p className="text-white font-bold text-2xl ">
+          <p className="text-white text-center font-bold text-2xl ">
             <Typewriter
               options={{
                 autoStart: true,

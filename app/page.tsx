@@ -8,7 +8,7 @@ import avatar1 from "../public/avatar.png"
 import avatar2 from "../public/avatar2.png"
 function page() {
   return (
-    <main className="max-w-7xl w-full mx-auto text-justify flex flex-col items-center justify-center gap-10  min-h-screen px-6 pb-4 ">
+    <main className="max-w-7xl w-full mx-auto lg:text-justify flex flex-col items-center justify-center gap-10  min-h-screen px-6 pb-4 ">
       {/* Heading */}
       <HeroSection />
 
@@ -21,7 +21,7 @@ function page() {
             syncronized video player amoung all party members
           </p>
         </div>
-        <div className="w-5/6 mx-auto  flex flex-col lg:flex-row flex-warp items-center justify-center gap-10">
+        <div className="w-full lg:w-5/6 mx-auto  flex flex-col lg:flex-row flex-warp items-center justify-center gap-10">
           <VideoFeature text="real-time cinematic experience" />
           <VideoFeature text="real-time cinematic experience" />
         </div>
@@ -29,14 +29,14 @@ function page() {
         <h2 className="text-3xl capitalize mt-6 mb-2  font-bold text-light-gray sm:text-center sm:text-4xl">
           Real-time communication
         </h2>
-        <section className="flex  justify-between items-center gap-4 md:gap-2">
-          <div className="flex   mx-auto  items-center gap-6">
+        <section className="flex flex-wrap  lg:justify-between lg:items-center gap-4 md:gap-2">
+          <div className="flex   lg:mx-auto  items-center gap-6">
             <div className="w-24 md:w-28 lg:w-32  aspect-square rounded-full shadow-md border-4   relative overflow-hidden  ">
               <Image src={avatar2} fill alt="user-aduio chat profile 1" />
             </div>
             <SoundWaves />
           </div>
-          <div className="flex    mx-auto  items-center gap-6">
+          <div className="flex ml-auto   lg:mx-auto  items-center gap-6">
             <SoundWaves />
             <div className="w-24 md:w-28 lg:w-32 aspect-square rounded-full shadow-md border-4   relative overflow-hidden ">
               <Image src={avatar1} fill alt="user-aduio chat profile 2" />
