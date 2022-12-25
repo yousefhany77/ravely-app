@@ -14,6 +14,8 @@ import Image from "next/image";
 const PremiumVideoPlayer = lazy(
   () => import("../../components/video/PremiumVideoPlayer")
 );
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const getParty = async (partyId: string, user: User) => {
   // check if the party exists in firebase and if it does, return true
@@ -29,6 +31,20 @@ const getParty = async (partyId: string, user: User) => {
         mediaId: party?.mediaId,
         mediaName: party?.mediaName,
       } as IPartyDetails;
+    }
+    else {
+
+      toast.error("You need to be a premium user to join this party", {
+
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        onClose: () => {
+          window.location.href = "/plans";
+        },
+
+      });
     }
   }
 
