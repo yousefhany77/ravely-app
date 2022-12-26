@@ -10,11 +10,27 @@ wants to watch a movie or series together remotely, you hop on a call and hope b
 - Tailwind CSS
 - Socket io
 -  Firebase (Auth & Firestore)
--  Stripe
+-  Stripe (subscriptions payment)
 -  Agora SDK for Audio Chat
 
 ## **How Ravely is Built**
-for frontend iam using nextjs and for backend i used nextjs api for user auth & party tokens and data fetching and data transformation for some routes  from TMDB API
+- **Frontend**: NextJs
+- **Backend** : Nextjs & Nodejs
+   - **NextJS**: user auth & party tokens & data fetching and transformation for some routes                         from TMDB API
+   - **NodeJs**:  soket io and video Stream
+   
+  #### **Movies and series Data**
+  Ravely fetches the movie and series data from TMDP API
+  #### **Video Player synchronization among party users**
+  I'm using here **web sockets** to send/receive video events and for now, it's only paused and resumed events and synced the video time stamp among all users 
+  
+   **_example_** 
+    if user1 paused the video at 1:55 it will fire a pause event and then send all party users that 
+    "user 1 paused the video at 1:55" and the video will be paused among all user
+  #### **Audio chat**
+  Audio chat is built on WebRTC with Agora SDK
+  
+
 
 
 ### **Project Tree** 
@@ -197,4 +213,4 @@ for frontend iam using nextjs and for backend i used nextjs api for user auth & 
     ├── party.ts
     ├── search.ts
     └── types.d.ts
-```
+    ```
