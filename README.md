@@ -18,6 +18,7 @@ for frontend iam using nextjs and for backend i used nextjs api for user auth & 
 
 
 ### **Project Tree** 
+```
 ├── README.md
 ├── app
 │   ├── (auth)
@@ -196,3 +197,4 @@ for frontend iam using nextjs and for backend i used nextjs api for user auth & 
     ├── party.ts
     ├── search.ts
     └── types.d.ts
+```
