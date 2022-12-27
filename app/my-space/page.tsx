@@ -17,11 +17,11 @@ export default async function Home() {
 
   return (
     <main className="text-white w-full flex flex-col  p-10">
-     
+      <h2 className="capitalize text-xl lg:text-3xl font-extrabold text-white shadow-lg w-fit my-6 ">Continue Watching</h2>
       <ConintueWatching />
 
       <section className="h-full  text-white  w-full  ">
-        <h2 className="font-bold text-3xl my-6 ">Trending</h2>
+        <h2 className="capitalize text-xl lg:text-3xl font-extrabold text-white shadow-lg w-fit my-6 ">Trending</h2>
         <div className="grid  md:grid-cols-3 lg:grid-cols-4  3xl:grid-cols-5 gap-4 ">
           {trending.map((item: any) => (
             <MovieCard data={item} key={item.id} />
