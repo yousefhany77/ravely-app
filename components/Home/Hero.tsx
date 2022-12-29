@@ -8,7 +8,7 @@ import Image from "next/image";
 import Logo from "../../public/logo.png";
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Plans", href: "/Plans" },
+  { name: "Plans", href: "/plans" },
 ];
 
 export default function HeroSection() {
