@@ -26,7 +26,7 @@ interface AuthContext {
   user: User | null;
   loading: boolean;
   error: string | null;
-  signOut: () => Promise<void>;
+  signOut: (redirect?: boolean) => Promise<void>;
   signUp: (email: string, password: string) => Promise<User | undefined>;
   signInWithGoogle: () => Promise<User | undefined>;
   login: (email: string, password: string) => Promise<User | undefined>;
@@ -41,7 +41,7 @@ export const AuthContext = createContext<AuthContext>({
   login: async (_email, _password) => Promise.resolve(undefined),
   signInWithGoogle: async () => Promise.resolve(undefined),
   signUp: (_email, _password) => Promise.resolve(undefined),
-  signOut: async () => { },
+  signOut: async (redirect?: boolean) => { },
   resetPassword: async (_email) => { },
   reAuthUser: async (_email, _password) => { },
   reAuthWithProvider: async (_email) => { },
@@ -182,7 +182,7 @@ export const AuthProvider = memo(function AuthProvider({
       );
     }
   };
-  const signOut = useCallback(async () => {
+  const signOut = useCallback(async (redirect?: boolean) => {
     await auth.signOut();
     await fetch("api/auth/logout", {
       method: "POST",
@@ -190,7 +190,10 @@ export const AuthProvider = memo(function AuthProvider({
         "Content-Type": "application/json",
       },
     });
-    window.location.href = "/"
+    if (redirect) {
+
+      window.location.href = "/"
+    }
   }, [auth]);
   const resetPassword = async (email: string) => {
     return sendPasswordResetEmail(auth, email)

@@ -71,7 +71,7 @@ function SignupForm() {
               const stripe = await loadStripe(
                 process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
               );
-              await signOut();
+              
 
               stripe?.redirectToCheckout({ sessionId: data!.sessionId });
             }
