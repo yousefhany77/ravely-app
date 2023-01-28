@@ -3,7 +3,7 @@
 Ravely simply solves a problem when u and your friends or partner, etc...
 wants to watch a movie or series together remotely, you hop on a call and hope both of you start the video at the same time it's such a pain to sync the video between the two parties, so that's what ravely solves not only sync the video but also real-time communication with audio chat to replicate the cinema experience with Ravely Party Feature.
 
-# _blog about ravely_
+ _blog about ravely_
 [Blog URL](https://www.youssefhany.dev/projects/ravely-real-time-cinema-experience)
 
 ### **Tech Stack**
